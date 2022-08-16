@@ -2,6 +2,7 @@ import UsersService from '../service/users'
 import UsersDAO from '../db/dao/users'
 
 const createUser = async (req, res) => {
+    console.log('usao u createUser u controller users.js')
     try {
       const existEmail = await UsersDAO.findUser(req.body.email)
       const existUsername = await UsersDAO.findUserByUsername(req.body.username)

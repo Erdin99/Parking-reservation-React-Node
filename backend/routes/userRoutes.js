@@ -8,7 +8,7 @@ import {registration} from '../middleware/registration'
 const router = express.Router()
 
 // routes for users
-router.post('/users/signup', 
+router.post('/users/signup',
     validation, registration, usersController.createUser
 )
 

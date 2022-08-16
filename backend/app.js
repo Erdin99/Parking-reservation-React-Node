@@ -4,6 +4,7 @@ import parkingRouter from './routes/parkingRoutes'
 import parkingReservation from './routes/parkingReservationRoutes'
 import parkingComments from './routes/parkingCommentsRoutes'
 import knex from './db'
+import cors from 'cors'
 
 knex.migrate.latest()
 const app = express()
@@ -15,6 +16,7 @@ app.use(userRoutes)
 app.use(parkingRouter)
 app.use(parkingReservation)
 app.use(parkingComments)
+app.use(cors())
 
 app.listen(port, () => {
     console.log(`Now listening on port ${port}`)

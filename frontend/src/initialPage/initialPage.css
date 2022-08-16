@@ -37,7 +37,7 @@ body {
     text-align: center;
 }
 
-.title {
+.title-project {
     font-size:50px;
 }
 
@@ -77,10 +77,14 @@ body {
 }
 
 .horizontal {
-    height: 74px;
+    height: 84px;
     width: 100%;
     background-color: rgb(0,0,0);
     background-color: rgba(0,0,0, 0.7);
+}
+
+.parking_logo {
+    padding-left: 20px;
 }
 
 .button3 {
