@@ -13,19 +13,19 @@ body {
   background-color: rgb(62, 112, 112);
   border-radius: 20px;
   box-sizing: border-box;
-  height: 800px;
-  padding: 30px;
+  height: 850px;
+  padding: 25px;
   width: 500px;
   box-shadow: 25px 25px 25px 25px rgba(0, 0, 0, 0.5);
 }
 
-.title {
+.title-signup {
   color: #eee;
   font-family: sans-serif;
   font-size: 36px;
   font-weight: 600;
   margin-top: 30px;
-  margin-bottom: 35.rem;
+  margin-bottom: 1.5rem;
 }
 
 .subtitle {
@@ -34,6 +34,7 @@ body {
   font-size: 16px;
   font-weight: 600;
   margin-top: 10px;
+  margin-bottom: 2rem;
 }
 
 .input-container {
@@ -48,6 +49,11 @@ body {
 
 .ic2 {
   margin-top: 30px;
+}
+
+.ic3 {
+  margin-top: 30px;
+  margin-bottom: -15px;
 }
 
 .input {
@@ -82,6 +88,7 @@ body {
 .input:focus ~ .cut,
 .input:not(:placeholder-shown) ~ .cut {
   transform: translateY(8px);
+  width: 100px;
 }
 
 .placeholder {
@@ -139,4 +146,15 @@ body {
 
 .submit:active {
   background-color: rgb(94, 158, 158);
+}
+
+.info {
+  background-color: lightcoral;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 10px;
+  text-align: center;
+  margin-top: 5px;
+  padding: 3px;
 }
