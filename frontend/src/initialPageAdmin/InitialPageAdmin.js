@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import "./initialPageAdmin.css";
 import parking from "../images/parking.jpg"
-import NavigationAdmin from "../navigation/NavigationAdmin";
+import Navigation from "../navigation/Navigation";
 
 function InitialPageAdmin() {
     
@@ -11,7 +11,7 @@ function InitialPageAdmin() {
     return (
         <>
             <div>
-                <NavigationAdmin />
+                <Navigation />
             </div>
             <div className="content-admin">    
                 <div className="admin-title">

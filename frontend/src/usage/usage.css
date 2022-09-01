@@ -32,7 +32,7 @@
     --clr-black: #222;
     --transition: all 0.3s linear;
     --spacing: 0.1rem;
-    --radius: 0.7rem;
+    --radius: 10px;
     --light-shadow: 0 5px 15px rgba(0, 0, 0, 1);
     --dark-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     --max-width: 1170px;
@@ -46,14 +46,15 @@
     padding: 2rem 3.5rem;
     text-align: center;
     width: 50%;
+    height: 75%;
     float: none;
-    margin: 220px auto;
+    margin: 100px auto;
 
 }
 
 .informations-title {
     margin-bottom: 3.5rem;
-    font-size: 40px;
+    font-size: 35px;
 }
 
 .informations {
