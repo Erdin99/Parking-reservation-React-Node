@@ -13,7 +13,7 @@ body {
   background-color: rgb(62, 112, 112);
   border-radius: 20px;
   box-sizing: border-box;
-  height: 850px;
+  height: 670px;
   padding: 25px;
   width: 500px;
   box-shadow: 25px 25px 25px 25px rgba(0, 0, 0, 0.5);
@@ -38,7 +38,7 @@ body {
 }
 
 .input-container {
-  height: 50px;
+  height: 40px;
   position: relative;
   width: 100%;
 }
@@ -100,7 +100,7 @@ body {
   position: absolute;
   transform-origin: 0 50%;
   transition: transform 200ms, color 200ms;
-  top: 20px;
+  top: 15px;
 }
 
 .input:focus ~ .placeholder,
