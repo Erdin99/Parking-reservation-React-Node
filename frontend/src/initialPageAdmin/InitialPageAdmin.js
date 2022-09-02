@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import "./initialPageAdmin.css";
 import parking from "../images/parking.jpg"
 import Navigation from "../navigation/Navigation";
+import { Link } from "react-router-dom";
 
 function InitialPageAdmin() {
     
@@ -33,8 +34,8 @@ function InitialPageAdmin() {
                         </div>
                         <p>Adresa</p>
                         <div className="buttons">
-                            <button className="info-btn">Vidi objavu</button>
-                            <button className="edit-btn">Uredi objavu</button>
+                            <Link to="/parking/details" className="info-btn">Vidi objavu</Link>
+                            <Link to="/edit/post" className="edit-btn">Uredi objavu</Link>
                             <button className="delete-btn">Izbriši objavu</button>
                         </div>
                     </footer>

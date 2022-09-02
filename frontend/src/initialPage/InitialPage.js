@@ -8,7 +8,6 @@ function InitialPage() {
         <div className="full-screen bg-home">
             <div className="horizontal">
                 <img src={parking_logo} width="400" height="70" alt="parking logo" className="parking_logo"></img>
-                <Link to="/usage" className="button button3">Način korištenja</Link>
             </div>
             <div className="bg-text">
                 <h2>Sistem na kojem možeš rezervisati parking mjesto bilo gdje u Sarajevu!</h2>

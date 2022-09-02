@@ -39,27 +39,15 @@
     --fixed-width: 620px;
 }
 
-.card {
-    background: var(--clr-white);
-    border-radius: var(--radius);
-    box-shadow: var(--light-shadow);
-    padding: 2rem 3.5rem;
-    text-align: center;
-    width: 50%;
-    height: 75%;
-    float: none;
-    margin: 100px auto;
-
-}
-
 .informations-title {
     margin-bottom: 3.5rem;
+    margin-left: 3rem;
     font-size: 35px;
 }
 
 .informations {
     margin: 3rem;
     color: black;
-    font-size: 20px;
+    font-size: 18px;
 }
 

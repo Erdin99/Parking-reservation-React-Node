@@ -1,16 +1,16 @@
 import React from "react";
 import Navigation from "../navigation/Navigation";
-import "./parkingSpaceForm.css";
 
-function ParkingSpaceForm() {
+function EditPost() {
     return (
         <>
             <div>
                 <Navigation />
             </div>
+
             <div className="content-admin">
                 <div className="container-post-parking-form">
-                    <h1 className="title">Unesite neophodne podatke za Vaš parking prostor!</h1>
+                    <h1 className="title">Ovdje možete urediti vašu objavu!</h1>
                     <form>
                         <div className="grid">
                             <div className="form-group a">
@@ -33,16 +33,10 @@ function ParkingSpaceForm() {
                                 <label for="bio">Osnovne informacije:</label>
                                 <textarea id="bio"></textarea>
                             </div>
-                            
-                            <div className="form-group image-group">
-                                <label for="image">Postavite fotografije za Vaš parking prostor:</label>
-                                <input type="file"  name="file" multiple accept="image/*"/>
-                            </div>
-                            
                         </div>
                         
                         <div className="button-container">
-                            <button className="button-post-form">Objavi</button>
+                            <button className="button-post-form">Uredi</button>
                         </div>
                     </form>
                 </div>
@@ -51,4 +45,4 @@ function ParkingSpaceForm() {
     );
 }
 
-export default ParkingSpaceForm;
+export default EditPost;

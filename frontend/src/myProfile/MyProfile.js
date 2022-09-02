@@ -25,11 +25,11 @@ function MyProfile() {
                     <p className="user-info">Rola: iznajmljuje parking prostor</p>
                 </article>
                 {userId === id && (
-                    <div class="container-insert-image">
-                        <div class="form-insert-image">
+                    <div className="container-insert-image">
+                        <div className="form-insert-image">
                             <input type="file" accept=".jpg, .png"/>
                             <span>
-                                <i class="fas fa-cloud-upload-alt fa-5x"></i>
+                                <i className="fas fa-cloud-upload-alt fa-5x"></i>
                                 <h1>Postavite vašu profilnu sliku!</h1>
                             </span>
                         </div>
