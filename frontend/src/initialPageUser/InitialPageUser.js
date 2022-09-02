@@ -1,7 +1,8 @@
 import React from "react";
 import Navigation from "../navigation/Navigation";
 import "./initialPageUser.css";
-import parking from "../images/parking.jpg"
+import parking from "../images/parking.jpg";
+import { Link } from "react-router-dom";
 
 function InitialPageAdmin() {
     return (
@@ -23,7 +24,7 @@ function InitialPageAdmin() {
                     </div>
                     <div className="underline"></div>
                     <div className="w3-row w3-padding w3-border w3-gray" style={{margin: "auto"}}>
-                        <div className="w3-card">
+                        <Link to="/parking/spot" className="w3-card">
                             <div className="parking-image">
                                 <img src={parking}></img>
                             </div>
@@ -31,7 +32,7 @@ function InitialPageAdmin() {
                                 <h3>SCC parking</h3>
                                 <p>Vrbanja 1</p>
                             </div>
-                        </div>
+                        </Link>
 
                         <div className="w3-card">
                             <div className="parking-image">

@@ -3,9 +3,9 @@ import "./footer.css";
 
 function Footer() {
     return (
-		<footer class="footer">
+		<footer className="footer">
 			<p>Možete me kontaktirati na nekoj od ovih društvenih mreža, te također pogledati profil na Github-u ukoliko vas zanima.</p>
-			<ul class="social">
+			<ul className="social">
 				<li><a href="#" target="_blank">Linkedin</a></li>
 				<li><a href="https://www.facebook.com/login/" target="_blank">Facebook</a></li>
 				<li><a href="https://www.instagram.com/" target="_blank">Instagram</a></li>
