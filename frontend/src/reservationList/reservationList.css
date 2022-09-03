@@ -1,0 +1,138 @@
+.reservation-list-title{
+    font-size: 2rem;
+    font-weight: 700;
+    position: relative;
+    color: #12263a;
+    margin-top: 40px;
+    text-align: center;
+}
+
+.reservation-list-title::after{
+    content: "";
+    position: absolute;
+    left: 44%;
+    top: 150%;
+    bottom: 0;
+    height: 4px;
+    width: 150px;
+    background: #12263a;
+}
+
+.button-row {
+    width: 60%;
+    position: relative;
+    top: 4%;
+    left: 25%;
+}
+  
+.button-list-option {
+    font: sans-serif;
+    font-size: 18px;
+    padding: 10px 15px;
+    background: #F8F8F8;
+    color: black;
+    border: 1px solid #DDD;
+    border-right-width: 0;
+    border-radius: 0;
+}
+    
+.button-list-option.is-active {
+    background: #26272b;
+    color: white;
+}
+  
+.button-row .button-list-option:first-child {
+    border-radius: 8px 0 0 8px;
+}
+  
+.button-row .button-list-option:last-child {
+    border-right-width: 1px;
+    border-radius: 0 8px 8px 0;
+}
+
+.list tr:nth-child(odd) {
+    background-color:#ddd;
+  }
+  
+  .list tr:nth-child(even) {
+    background-color:#fff;
+}
+  
+@media screen and (min-width:600px) {    
+    .list {
+      display: table;
+      margin: 0 auto;
+      margin-top: 80px;
+      width: 80%;
+    }
+   
+    .list tr {
+      display: table-row;
+    }
+    
+    .list tr:first-child th {
+      background-color:#444;
+      color:#fff;
+      padding: .6em 2em;
+      border: 1px solid black;
+    }
+    
+    .list tr > td {
+      display: table-cell;
+      padding: .6em 1em;
+      border: 1px solid black;
+      text-align: center;
+    }
+    
+}
+  
+@media screen and (max-width:599px) {    
+    .list tr {
+      border: solid 1px #ccc;
+      display: block;
+      list-style: none;
+      margin: 1em;
+      padding: .5em 1em;
+    }
+    
+    .list tr:first-child {
+      display: none;
+    }
+    
+    .list tr > td {
+      display: block;
+      padding: .25em 0;
+    }
+    
+    .list tr:nth-child(odd) > td + td {
+      border-top: solid 1px #ccc;
+    }
+    
+    .list tr:nth-child(even) > td + td {
+      border-top: solid 1px #eee;
+    }
+    
+    .list tr > td:before {
+      color:#000;
+      content: attr(data-label);
+      display: inline-block;
+      font-size: 75%;
+      font-weight: bold;
+      text-transform: capitalize;
+      vertical-align: top;
+      width: 50%;
+    }    
+}
+  
+@media screen and (max-width:349px) {
+      
+    .list ul > td:before {
+      display: block;
+    }
+    
+    .list p {
+      margin: 0;
+    }
+    
+}
+

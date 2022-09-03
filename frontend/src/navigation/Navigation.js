@@ -10,6 +10,7 @@ function Navigation() {
     const [role, setRole] = useState(2);
 
     useEffect(() => {
+        //blok koda koji klikom na "Način korištenja" otvara prozor sa tekstom
         var modal = document.getElementById("myModal");
 
         var link = document.getElementById("openWindow");
@@ -42,18 +43,20 @@ function Navigation() {
                         <li><Link to="/users/admin">Početna</Link></li> : <li><Link to="/users/user">Početna</Link></li>
                     }
                     <li><Link to="/common/wall">Zajednički zid</Link></li>
-                    <li><Link to="/my/profile">Moj profil</Link></li>
                     {role === adminRole ?
                         <li><Link to="/parking/space/form">Postavi parking prostor</Link></li> : ""
                     }
                     {role !== adminRole ?
-                        <li><Link to="#">Lista mojih rezervacija</Link></li> : ""
+                        <li><Link to="/reservation/list">Lista mojih rezervacija</Link></li> : ""
                     }
                     <li><Link to="/about/me">O kreatoru sistema</Link></li>
                     <li href="#" id="openWindow">Način korištenja</li>
                     <li><Link to="#">Logout</Link></li>
                 </ul>
             </nav>
+            
+            <div class="navigation-fixed-placeholder"></div>
+
 
             <div id="myModal" className="modal">
                 <div className="modal-content">

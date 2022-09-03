@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navigation from "../navigation/Navigation";
 import "./parkingDetails.css";
 //sljedeca 4 importa iz foldera images obrisati kad se uspostavi konekcija sa bazom
@@ -8,6 +8,9 @@ import alta3 from "../images/alta3.png";
 import alta4 from "../images/alta4.jpg";
 
 function ParkingDetails() {
+
+    const [counter, setCounter] = useState(5);
+    const [removeLink, setRemoveLink] = useState(false); //ovo removeLink je za otvori jos komentara, u slucaju da nema vise komentara za prikaz, uklanja se link
 
     useEffect(() => {
         //blok koda koji omogucava prelaz sa slike na sliku
@@ -30,7 +33,21 @@ function ParkingDetails() {
         }
 
         window.addEventListener('resize', slideImage);
-    });
+
+        // u ovom slucaju je 11, taj broj ovisi o tome koliko komentara se nalazi za odredjeni parking prostor, te kad izvucemo sve elemente, duzinu liste koristimo u tom slucaju umjesto
+        // broja 11
+        if(counter > 11) {
+            setRemoveLink(true);
+        }
+    }, [counter]);
+
+    function increaseCounter() {
+        setCounter(counter + 5);
+    }
+
+    const runCallback = (cb) => {
+        return cb();
+    }
     
     return (
         <>
@@ -91,17 +108,28 @@ function ParkingDetails() {
 
                 <div>
                     <h1 className="comment-section-title">Sekcija komentara za ovaj parking prostor!</h1>
-                    <div className="comment-box-inner">
-                        <h3>Username korisnika</h3>
-                        <p>Ovdje se pise nekakav komentar  dhf dhf dhf hdf hdfhdfh hdfjsf hjsdfh sdjsdjfhsdjf</p>
-                        <h6 className="comment-date"> April 18, 2013, 12:01 </h6>  
+                    
+                    <div>
+                        {
+                            runCallback(() => {
+                                const comments = [];
+                                for (var i = 0; i < 12; i++) {
+                                    if(i < counter) {
+                                        comments.push(
+                                            <div className="comment-box-inner">
+                                                <h3>Username korisnika</h3>
+                                                <p>Ovdje se pise nekakav komentar  dhf dhf dhf hdf hdfhdfh hdfjsf hjsdfh sdjsdjfhsdjf</p>
+                                                <h6 className="comment-date"> April 18, 2013, 12:01 </h6>  
+                                            </div>
+                                        );
+                                    }
+                                }
+                                return comments;
+                            })
+                        }
                     </div>
-
-                    <div className="comment-box-inner">
-                        <h3>Username korisnika</h3>
-                        <p>Ovdje se pise neki drugi komentar  dhf dhf dhf hdf hdfhdfh hdfjsf hjsdfh sdjsdjfhsdjf </p>
-                        <h6 className="comment-date"> September 02, 2022, 14:41 </h6>  
-                    </div>
+    
+                    {removeLink !== true ? <li className="increase-counter" onClick={(e) => increaseCounter()}>Otvori još komentara</li> : ""}
                 </div>
             </div>
         </>
