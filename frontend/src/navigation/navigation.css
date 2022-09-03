@@ -1,113 +1,143 @@
 .primary-navigation {
-      margin: 0 auto;
-      display: block;
-      padding: 20px 0 25px 0;  
-      text-align: right;
-      font-size: 16px;
-      background-color: #26272b;
+    margin: 0 auto;
+    display: block;
+    padding: 20px 0 25px 0;  
+    text-align: right;
+    font-size: 16px;
+    background-color: #26272b;
 }
 
 .logo-space {
-    float: left;
+  float: left;
 }
-  
+
 ul li {
-    list-style: none;
-    margin: 0 auto;
-    border-left: 2px solid #e0edf7;
-    display: inline-block;
-    padding: 0 30px;
-    position: relative;
-    text-decoration: none;
-    text-align: center;
-    font-family: arvo;
+  list-style: none;
+  margin: 0 auto;
+  border-left: 2px solid #e0edf7;
+  display: inline-block;
+  padding: 0 30px;
+  position: relative;
+  text-decoration: none;
+  text-align: center;
+  font-family: arvo;
 }
-  
+
 li a {
-    color: white;
+  color: white;
 }
-  
+
 li a:hover {
-    color: #2494e4;
+  color: #2494e4;
 }
 
 li:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 ul li:hover > ul, ul li ul:hover {
-    visibility: visible;
-    opacity: 1;
-    display: block;
-    min-width: 250px;
-    text-align: left;
-    padding-top: 20px;
-    box-shadow: 0px 3px 5px -1px #ccc;
+  visibility: visible;
+  opacity: 1;
+  display: block;
+  min-width: 250px;
+  text-align: left;
+  padding-top: 20px;
+  box-shadow: 0px 3px 5px -1px #ccc;
 }
 
 ul li ul li {
-    clear: both;
-    width: 100%;
-    text-align: left;
-    margin-bottom: 20px;
-    border-style: none;
+  clear: both;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 20px;
+  border-style: none;
 }
 
 ul li ul li a:hover {
-    padding-left: 10px;
-    border-left: 2px solid white;
-    transition: all 0.3s ease;
+  padding-left: 10px;
+  border-left: 2px solid white;
+  transition: all 0.3s ease;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 a:hover {
-    color: white;
+  color: white;
 }
 
 ul li ul li a { transition: all 0.5s ease; }
 
 #openWindow {
-    color: white;
+  color: white;
 }
 
 #openWindow:hover {
-    color: #2494e4;
+  color: #2494e4;
 }
 
 .modal {
-    display: none; 
-    position: fixed; 
-    z-index: 1; 
-    padding-top: 200px; 
-    left: 0;
-    top: 0;
-    width: 100%; 
-    height: 100%; 
-    overflow: auto; 
-    background-color: rgb(0,0,0); 
-    background-color: rgba(0,0,0,0.7); 
+  display: none; 
+  position: fixed; 
+  z-index: 1; 
+  padding-top: 200px; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgb(0,0,0); 
+  background-color: rgba(0,0,0,0.7); 
 }
-  
+
 .modal-content {
-    background-color: #fefefe;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    border-radius: 20px;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  border-radius: 20px;
 }
-  
+
 .close {
-    color: #aaaaaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
 }
-  
+
 .close:hover, .close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@media all and (max-width: 600px) {
+
+	.primary-navigation {
+		padding: 30px 0 60px 0;
+		height: 75px;
+	}
+
+	.primary-navigation ul{
+		float: none;
+		margin: -8px 0 10px;
+		text-align: center;
+		font-size: 24px;
+		line-height: 1;
+	}
+
+	.primary-navigation ul{
+		line-height: 1;
+		float:none;
+	}
+
+	.primary-navigation li {
+		font-size: 13px;
+	}
+
+	body.fixed .navigation-fixed {
+		display: none;
+	}
+
 }

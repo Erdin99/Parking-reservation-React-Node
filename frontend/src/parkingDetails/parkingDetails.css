@@ -30,10 +30,18 @@
 
 .card .img-select{
     display: flex;
+    border: 1px solid black;
+    
 }
 
 .img-item{
     margin: 0.3rem;
+    border: 1px solid black;
+}
+
+.img-item img {
+    height: 100%;
+    width: 100%;
 }
 
 .img-item:nth-child(1),
@@ -48,6 +56,7 @@
 
 .product-content{
     padding: 2rem 1rem;
+    text-align: center;
 }
 
 .product-title{
@@ -195,6 +204,7 @@
         justify-content: center;
         height: 90%;
         width: 90%;
+        padding: 40px;
     }
     .product-content{
         padding-top: 0;
@@ -258,4 +268,10 @@
     font-size: 12px;
 }
  
-  
+.increase-counter {
+    padding: 20px;
+    font-weight: 500;
+    text-decoration: underline;
+    color: #256eff;
+    list-style-type: none; 
+}  
