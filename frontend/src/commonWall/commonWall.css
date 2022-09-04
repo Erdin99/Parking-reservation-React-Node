@@ -39,9 +39,9 @@
 .form-control label {
     display: block;
     margin-bottom: 1.25rem;
-    letter-spacing: 0.25rem;
     color: black;
     font-size: 18px;
+    font-weight: bold;
 }
 
 .form-control textarea {

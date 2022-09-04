@@ -4,10 +4,10 @@ import "../usage/usage.css";
 import parking_logo from '../images/parking_logo.png'
 import { Link } from "react-router-dom";
 
-function Navigation() {
 
+function Navigation() {
     const adminRole = 1;
-    const [role, setRole] = useState(2);
+    const [role, setRole] = useState(1);
 
     useEffect(() => {
         //blok koda koji klikom na "Način korištenja" otvara prozor sa tekstom
@@ -31,8 +31,8 @@ function Navigation() {
             }
         }
     })
-    
-    return(
+
+    return( 
         <>
             <nav role="navigation" className="primary-navigation">
                 <div className="logo-space">
@@ -55,7 +55,7 @@ function Navigation() {
                 </ul>
             </nav>
             
-            <div class="navigation-fixed-placeholder"></div>
+            <div className="navigation-fixed-placeholder"></div>
 
 
             <div id="myModal" className="modal">
@@ -63,14 +63,18 @@ function Navigation() {
                     <span className="close">&times;</span>
                     <h3 className='informations-title'>Način korištenja:</h3>
                     <p className='informations'>
-                        Ukoliko korisnik nema korisnički račun, neophodno je to učiniti klikom na dugme sign up, te unijeti neophodne podatke.
-                        Ukoliko korisnik ima korisnički račun neophodno je samo da se loguje i ima pristup svim parking mjestima. 
-                        Korisnik koji istražuje parking mjesto za rezervaciju ima mogućnost da pretraži odgovarajući parking, 
-                        te klikom na karticu ima mogućnost da vidi detalje vezane za taj parking prostor, dok korisnik koji iznajmljuje ima mogućnost 
-                        da unese svoj parking prostor za rezervisanje te neki dodatni opis vezan za isti. 
-                        Ukoliko parking prostor nema slobodnih mjesta, korisniku će biti prikazana informacija te neće imati mogućnost da rezerviše 
-                        parking mjesto. Korisnik ima mogućnost ostaviti ocjenu, te komentar u vidu svog iskustva, tako da može dati potencijalno važnu
-                        informaciju za buduće korisnike. Prilikom rezervacije parking prostora, na mail se dobija kod koji se koristi kao verifikacija
+                        Korisnik koji istražuje parking mjesto za rezervaciju ima listu parking prostora, gdje ima mogućnost pretraživanja i odabira po svojoj želji.
+                        U samom vrhu na početnoj strani nalazi se filter, po kojem se može filtrirati lista parking prostora. Klikom na karticu nalaze se detalji vezan 
+                        za taj parking prostor, te mogućnost pregleda i pisanja komentara kao i rezervisanja. 
+                        Na zajedničkom zidu se iznose mišljenja korisnika za određeni prostor, kao i eventualno obavještenje od strane vlasnika parkinga.
+                        Korisnik ima mogućnost i pregleda svojih rezervacija za taj dan, prethodne rezervacije i odbijene rezervacije, što od svojih odbijenica tako i od
+                        vlasnika parking prostora.
+                        <br />
+                        Što se tiče korisnika koji postavljaju parking na iznajmljivanje, pa početnoj se nalazi lista postavljenih parking prostora, gdje imate mogućnost pregledati
+                        objavu, urediti je ili obrisati. Na postavi parking prostor, unosite podatke koje želite da budu prikazani drugim korisnicima.
+                        Na samom kraju, o kreatoru sistema, imate osnovne informacije o meni, te linkove na kojima me možete kontaktirati.
+                        <br />
+                        Prilikom rezervacije parking prostora, na mail se dobija kod koji se koristi kao verifikacija
                         da je parking mjesto rezervisano. Bez tog koda ulaz na parking nije moguć. Prilikom izlaska sa parking prostora, Vaša rezervacija
                         se poništava, te ukoliko želite ući opet na parking prostor, to neće biti moguće ukoliko opet ne rezervišete parking mjesto i dobijete
                         novi kod na mail.

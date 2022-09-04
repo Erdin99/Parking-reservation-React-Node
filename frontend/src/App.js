@@ -8,10 +8,11 @@ import Login from "./login/Login";
 import InitialPageUser from "./initialPageUser/InitialPageUser";
 import InitialPageAdmin from "./initialPageAdmin/InitialPageAdmin";
 import CommonWall from "./commonWall/CommonWall";
-import ReservationList from "./reservationList/ReservationList";
+import ReservationList from "./userReservationList/ReservationList";
 import ParkingSpaceForm from "./parkingSpaceForm/ParkingSpaceForm";
 import AboutMe from "./aboutMe/AboutMe";
 import ParkingDetails from "./parkingDetails/ParkingDetails";
+import AdminReservationList from "./adminReservationList/AdminReservationList";
 import EditPost from "./editPost/EditPost";
 import SpecificParkingDetails from "./specificParkingDetails/SpecificParkingDetails";
 
@@ -31,6 +32,7 @@ function App() {
           <Route path="/parking/space/form" exact element={<ParkingSpaceForm />}></Route>
           <Route path="/about/me" exact element={<AboutMe />}></Route>
           <Route path="/parking/details" exact element={<ParkingDetails />}></Route>
+          <Route path="/reservations" exact element={<AdminReservationList />}></Route>
           <Route path="/edit/post" exact element={<EditPost />}></Route>
           <Route path="/parking/spot" exact element={<SpecificParkingDetails />}></Route>
         </Routes>

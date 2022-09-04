@@ -28,7 +28,7 @@ function InitialPageAdmin() {
                             <div className="parking-image">
                                 <img src={parking}></img>
                             </div>
-                            <div className="parking-title">
+                            <div className="parking-card-title">
                                 <h3>SCC parking</h3>
                                 <p>Vrbanja 1</p>
                             </div>
@@ -38,7 +38,7 @@ function InitialPageAdmin() {
                             <div className="parking-image">
                                 <img src={parking}></img>
                             </div>
-                            <div className="parking-title">
+                            <div className="parking-card-title">
                                 <h3>SCC parking</h3>
                                 <p>Vrbanja 1</p>
                             </div>
@@ -48,7 +48,7 @@ function InitialPageAdmin() {
                             <div className="parking-image">
                                 <img src={parking}></img>
                             </div>
-                            <div className="parking-title">
+                            <div className="parking-card-title">
                                 <h3>SCC parking</h3>
                                 <p>Vrbanja 1</p>
                             </div>
@@ -58,7 +58,7 @@ function InitialPageAdmin() {
                             <div className="parking-image">
                                 <img src={parking}></img>
                             </div>
-                            <div className="parking-title">
+                            <div className="parking-card-title">
                                 <h3>SCC parking</h3>
                                 <p>Vrbanja 1</p>
                             </div>
@@ -68,7 +68,7 @@ function InitialPageAdmin() {
                             <div className="parking-image">
                                 <img src={parking}></img>
                             </div>
-                            <div className="parking-title">
+                            <div className="parking-card-title">
                                 <h3>SCC parking</h3>
                                 <p>Vrbanja 1</p>
                             </div>
