@@ -45,14 +45,14 @@ function ReservationList() {
             <div className="content-admin">
                 {button1 && <h1 className="reservation-list-title">Rezervisana mjesta za: 3.9.2022.</h1>}
                 
-                <div class="button-row">
-                    <button class="button-list-option" onClick={(e) => showTodaysReservations()} style={{backgroundColor: button1 === true?"#26272b":"white", color: button1 === false?"black":"white"}}>Današnje rezervacije</button>
-                    <button class="button-list-option" onClick={(e) => showAllReservations()} style={{backgroundColor: button2 === true?"#26272b":"", color: button2 === true?"white": "black"}}>Dosadašnje rezervacije</button>
-                    <button class="button-list-option" onClick={(e) => showApprovedReservations()} style={{backgroundColor: button3 === true?"#26272b":"", color: button3 === true?"white": "black"}}>Odobrene rezervacije</button>
-                    <button class="button-list-option" onClick={(e) => showDeniedReservations()} style={{backgroundColor: button4 === true?"#26272b":"", color: button4 === true?"white": "black"}}>Odbijene rezervacije</button>
+                <div className="button-row">
+                    <button className="button-list-option" onClick={(e) => showTodaysReservations()} style={{backgroundColor: button1 === true?"#26272b":"white", color: button1 === false?"black":"white"}}>Današnje rezervacije</button>
+                    <button className="button-list-option" onClick={(e) => showAllReservations()} style={{backgroundColor: button2 === true?"#26272b":"", color: button2 === true?"white": "black"}}>Dosadašnje rezervacije</button>
+                    <button className="button-list-option" onClick={(e) => showApprovedReservations()} style={{backgroundColor: button3 === true?"#26272b":"", color: button3 === true?"white": "black"}}>Odobrene rezervacije</button>
+                    <button className="button-list-option" onClick={(e) => showDeniedReservations()} style={{backgroundColor: button4 === true?"#26272b":"", color: button4 === true?"white": "black"}}>Odbijene rezervacije</button>
                 </div>
 
-                <div class="list">
+                <div className="list">
                     <tr>
                         <th>Username</th>
                         <th>Parking</th>

@@ -6,6 +6,7 @@ import alta1 from "../images/alta1.jpg";
 import alta2 from "../images/alta2.jpg";
 import alta3 from "../images/alta3.png";
 import alta4 from "../images/alta4.jpg";
+import { Link } from "react-router-dom";
 
 function ParkingDetails() {
 
@@ -57,7 +58,7 @@ function ParkingDetails() {
             <div className="content-admin">
                 <div className = "card-parking-details">
                     <div className = "card">
-                        <div className = "product-imgs">
+                        <div className = "parking-imgs">
                             <div className = "img-display">
                                 <div className = "img-showcase">
                                     <img src = {alta1} alt = "parking image" />
@@ -89,19 +90,31 @@ function ParkingDetails() {
                                 </div>
                             </div>
                         </div>
-                        <div className = "product-content">
-                            <h2 className = "product-title">Naziv parkinga</h2>
-                            <p className = "product-link">Adresa parkinga: Neka adresa</p>
+                        <div className = "parking-content">
+                            <h2 className = "parking-title">Naziv parkinga</h2>
+                            <p className = "parking-link">Adresa parkinga: Neka adresa</p>
                             
-                            <div className = "product-price">
+                            <div className = "parking-price">
                                 <p className = "new-price">Cijena (po satu): <span>1 KM </span></p>
                             </div>
 
-                            <div className = "product-detail">
+                            <div className="number">
+                                <p>Kapacitet ovog parking prostora je: <span style={{color: "#256eff"}}>140</span></p>
+                            </div>
+
+                            <div className="number">
+                                <p>Broj trenutno slobodnih mjesta je: <span style={{color: "#256eff"}}>25</span></p>
+                            </div>
+
+                            <div className = "parking-detail">
                                 <h2>Kratke informacije vezane za parking: </h2>
                                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo eveniet veniam tempora fuga tenetur placeat sapiente architecto illum soluta consequuntur, aspernatur quidem at sequi ipsa!</p>
-                                
                             </div>
+
+                            <div className="check-parking-reservation">
+                                <Link to="/reservations" className="check-reservation-button">Pogledaj rezervacije</Link>
+                            </div>
+
                         </div>
                     </div>
                 </div>

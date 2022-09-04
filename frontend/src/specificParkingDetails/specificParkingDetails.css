@@ -1,0 +1,61 @@
+
+.parking-info-tabs .nav-tabs {
+	border-bottom: 2px solid #696969;
+}
+
+.parking-info-tabs .nav-tabs .nav-link {
+	color: #323232;
+    font-size: 20px;
+}
+
+.tab-pane {
+    padding: 30px;
+}
+
+.comment-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    position: relative;
+    color: #12263a;
+    text-align: center;
+}
+
+.comment-title::after{
+    content: "";
+    position: absolute;
+    left: 43%;
+    top: 135%;
+    bottom: 0;
+    height: 4px;
+    width: 150px;
+    background: #12263a;
+}
+
+.review-heading {
+	font-size: 1.8rem;
+    font-weight: 700;
+    position: relative;
+    color: #12263a;
+}
+
+.review-form .round-black-btn {
+	text-transform: uppercase;
+	cursor: pointer;
+}
+
+.round-black-btn {
+	border-radius: 4px;
+    background: #212529;
+    color: #fff;
+    padding: 7px 45px;
+    display: inline-block;
+    margin-top: 20px;
+    border: solid 2px #212529; 
+    transition: all 0.5s ease-in-out 0s;
+}
+
+.star {
+    color: red;
+    font-weight: bold;
+}
+

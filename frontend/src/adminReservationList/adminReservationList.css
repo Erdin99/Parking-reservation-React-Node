@@ -1,0 +1,15 @@
+.three-button-row {
+    width: 60%;
+    position: relative;
+    top: 4%;
+    left: 31%;
+}
+
+.free-spots-info {
+    padding-top: 40px;
+    text-align: center;
+}
+
+.free-spots-info span {
+    text-decoration: underline;
+}
