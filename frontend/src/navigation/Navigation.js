@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 function Navigation() {
     const adminRole = 1;
-    const [role, setRole] = useState(1);
+    const [role, setRole] = useState(2);
 
     useEffect(() => {
         //blok koda koji klikom na "Način korištenja" otvara prozor sa tekstom
@@ -22,11 +22,11 @@ function Navigation() {
         }
 
         span.onclick = function() {
-        modal.style.display = "none";
+            modal.style.display = "none";
         }
 
         window.onclick = function(event) {
-            if (event.target == modal) {
+            if (event.target === modal) {
                 modal.style.display = "none";
             }
         }
@@ -67,7 +67,7 @@ function Navigation() {
                         U samom vrhu na početnoj strani nalazi se filter, po kojem se može filtrirati lista parking prostora. Klikom na karticu nalaze se detalji vezan 
                         za taj parking prostor, te mogućnost pregleda i pisanja komentara kao i rezervisanja. 
                         Na zajedničkom zidu se iznose mišljenja korisnika za određeni prostor, kao i eventualno obavještenje od strane vlasnika parkinga.
-                        Korisnik ima mogućnost i pregleda svojih rezervacija za taj dan, prethodne rezervacije i odbijene rezervacije, što od svojih odbijenica tako i od
+                        Korisnik ima mogućnost i pregleda svojih rezervacija za taj dan, prethodne rezervacije i odgođene rezervacije, što od svojih odgađanja tako i od
                         vlasnika parking prostora.
                         <br />
                         Što se tiče korisnika koji postavljaju parking na iznajmljivanje, pa početnoj se nalazi lista postavljenih parking prostora, gdje imate mogućnost pregledati
@@ -75,7 +75,7 @@ function Navigation() {
                         Na samom kraju, o kreatoru sistema, imate osnovne informacije o meni, te linkove na kojima me možete kontaktirati.
                         <br />
                         Prilikom rezervacije parking prostora, na mail se dobija kod koji se koristi kao verifikacija
-                        da je parking mjesto rezervisano. Bez tog koda ulaz na parking nije moguć. Prilikom izlaska sa parking prostora, Vaša rezervacija
+                        da je parking mjesto rezervisano. Bez tog koda ulaz na parking nije moguć. Prilikom izlaska sa parking prostora, vaša rezervacija
                         se poništava, te ukoliko želite ući opet na parking prostor, to neće biti moguće ukoliko opet ne rezervišete parking mjesto i dobijete
                         novi kod na mail.
                     </p>

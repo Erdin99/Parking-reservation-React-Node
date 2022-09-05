@@ -103,29 +103,29 @@ function Signup() {
                         <div className="input-container ic1">
                             <input id="firstname" className="input" name="firstName" value={first_name} type="text" placeholder=" " onChange={e => setFirstName(e.target.value)} />
                             <div className="cut"></div>
-                            <label for="firstname" className="placeholder">Vaše ime</label>
+                            <label hmtlFor="firstname" className="placeholder">Vaše ime</label>
                         </div>
                         <div className="input-container ic2">
                             <input id="lastname" className="input" name="lastName" value={last_name} type="text" placeholder=" " onChange={e => setLastName(e.target.value)} />
                             <div className="cut"></div>
-                            <label for="lastname" className="placeholder">Vaše prezime</label>
+                            <label htmlFor="lastname" className="placeholder">Vaše prezime</label>
                         </div>
                         <div className="input-container ic2">
                             <input id="username" className="input" name="username" value={username} type="text" placeholder=" " onChange={e => setUsername(e.target.value)}  />
                             <div className="cut"></div>
-                            <label for="username" className="placeholder">Vaš username</label>
+                            <label htmlFor="username" className="placeholder">Vaš username</label>
                         </div>
                         {fieldUsername && <p className="info">Neophodno je unijeti username prilikom registracije!</p>}
                         <div className="input-container ic2">
                             <input id="email" className="input" name="email" value={email} type="text" placeholder=" " onChange={e => setEmail(e.target.value)} />
                             <div className="cut cut-short"></div>
-                            <label for="email" className="placeholder">Vaš email</label>
+                            <label htmlFor="email" className="placeholder">Vaš email</label>
                         </div>
                         {fieldMail && <p className="info">Neophodno je unijeti email prilikom registracije!</p>}
                         <div className="input-container ic2">
                             <input id="password" className="input" name="password" value={password} type="password" placeholder=" " onChange={e => setPassword(e.target.value)} />
                             <div className="cut cut-short"></div>
-                            <label for="password" className="placeholder">Vaša šifra</label>
+                            <label htmlFor="password" className="placeholder">Vaša šifra</label>
                         </div>
                         {fieldPassword && <p className="info">Neophodno je unijeti šifru prilikom registracije!</p>}
                         <div className="input-container ic3">

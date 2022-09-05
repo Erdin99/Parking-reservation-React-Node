@@ -43,13 +43,13 @@ function Login() {
                         <div className="input-container ic2">
                             <input id="email" className="input" name="email" value={email} type="text" placeholder=" " onChange={e => setEmail(e.target.value)} />
                             <div className="cut cut-short"></div>
-                            <label for="email" className="placeholder">Vaš email</label>
+                            <label htmlFor="email" className="placeholder">Vaš email</label>
                         </div>
                         {fieldMailLogin && <p className="info">Neophodno je unijeti email prilikom prijave na sistem!</p>}
                         <div className="input-container ic2">
                             <input id="password" className="input" name="password" value={password} type="password" placeholder=" " onChange={e => setPassword(e.target.value)} />
                             <div className="cut cut-short"></div>
-                            <label for="password" className="placeholder">Vaša šifra</label>
+                            <label htmlFor="password" className="placeholder">Vaša šifra</label>
                         </div>
                         {fieldPasswordLogin && <p className="info">Neophodno je unijeti šifru prilikom prijave na sistem!</p>}
                         <button type="text" className="submit">Login</button>
