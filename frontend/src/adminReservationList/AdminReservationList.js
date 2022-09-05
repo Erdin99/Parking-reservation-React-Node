@@ -41,11 +41,15 @@ function AdminReservationList() {
                     <button className="button-list-option" onClick={(e) => showAllReservations()} style={{backgroundColor: button2 === true?"#26272b":"", color: button2 === true?"white": "black"}}>Dosadašnje rezervacije</button>
                     <button className="button-list-option" onClick={(e) => showDelayedReservations()} style={{backgroundColor: button3 === true?"#26272b":"", color: button3 === true?"white": "black"}}>Odgođene rezervacije</button>
                 </div>
-
-                <div className="free-spots-info">
-                    <h3>Preostali broj slobodnih mjesta je: <span>155</span></h3>
-                </div>
-
+                {button1 && 
+                    <div className="free-spots-info">
+                        <h3>Preostali broj slobodnih mjesta je: <span>140</span></h3>
+                        <form className="search-user-form">
+                            <label className="search-user">Pretraži korisnika po kodu: </label>
+                            <input type="text" className="search-by-code"></input>
+                        </form>
+                    </div>
+                }
                 <div className="list">
                     <tr>
                         <th>Username</th>
@@ -55,8 +59,9 @@ function AdminReservationList() {
                         <th>Registracijske oznake</th>
                         <th>Početak rezervacije</th>
                         <th>Kraj rezervacije</th>
-                        <th>Za platiti</th>
+                        <th>Kod</th>
                         {button1 && <th>Odgodi rezervaciju</th>}
+                        {button1 && <th>Završena rezervacija</th>}
                     </tr>
                     {button1 && (
                         <>
@@ -68,8 +73,9 @@ function AdminReservationList() {
                                 <td data-label="Registracijske oznake">A12-A-123</td>
                                 <td data-label="Početak rezervacije">12:00</td>
                                 <td data-label="Kraj rezervacije">14:00</td>
-                                <td data-label="Za platiti">2 KM</td>
-                                {button1 && <td data-label><button className="delete-button">Odgodi</button></td>}
+                                <td data-label="Kod">dsf3449sdf</td>
+                                {button1 && <td data-label="Odgodi"><button className="delete-button">Odgodi</button></td>}
+                                {button1 && <td data-label="Završeno"><button className="delete-button">Završeno</button></td>}
                             </tr>
                             <tr>
                                 <td data-label="Username">Mujke</td>
@@ -79,8 +85,9 @@ function AdminReservationList() {
                                 <td data-label="Registracijske oznake">A12-A-123</td>
                                 <td data-label="Početak rezervacije">12:00</td>
                                 <td data-label="Kraj rezervacije">14:00</td>
-                                <td data-label="Za platiti">2 KM</td>
+                                <td data-label="Kod">dsf3449sdf</td>
                                 {button1 && <td data-label><button className="delete-button">Odgodi</button></td>}
+                                {button1 && <td data-label><button className="delete-button">Završeno</button></td>}
                             </tr>
                         </>
                     )}
@@ -95,7 +102,7 @@ function AdminReservationList() {
                                 <td data-label="Registracijske oznake">A12-A-123</td>
                                 <td data-label="Početak rezervacije">12:00</td>
                                 <td data-label="Kraj rezervacije">14:00</td>
-                                <td data-label="Za platiti">2 KM</td>
+                                <td data-label="Kod">dsf3449sdf</td>
                             </tr>
                             <tr>
                                 <td data-label="Username">Mujke</td>
@@ -105,7 +112,7 @@ function AdminReservationList() {
                                 <td data-label="Registracijske oznake">A12-A-123</td>
                                 <td data-label="Početak rezervacije">12:00</td>
                                 <td data-label="Kraj rezervacije">14:00</td>
-                                <td data-label="Za platiti">2 KM</td>
+                                <td data-label="Kod">dsf3449sdf</td>
                             </tr>
                             <tr>
                                 <td data-label="Username">Mujke</td>
@@ -115,7 +122,7 @@ function AdminReservationList() {
                                 <td data-label="Registracijske oznake">A12-A-123</td>
                                 <td data-label="Početak rezervacije">12:00</td>
                                 <td data-label="Kraj rezervacije">14:00</td>
-                                <td data-label="Za platiti">2 KM</td>
+                                <td data-label="Kod">dsf3449sdf</td>
                             </tr>
                             <tr>
                                 <td data-label="Username">Mujke</td>
@@ -125,7 +132,7 @@ function AdminReservationList() {
                                 <td data-label="Registracijske oznake">A12-A-123</td>
                                 <td data-label="Početak rezervacije">12:00</td>
                                 <td data-label="Kraj rezervacije">14:00</td>
-                                <td data-label="Za platiti">2 KM</td>
+                                <td data-label="Kod">dsf3449sdf</td>
                             </tr>
                         </>
                     )}
@@ -140,7 +147,7 @@ function AdminReservationList() {
                                 <td data-label="Registracijske oznake">A12-A-123</td>
                                 <td data-label="Početak rezervacije">12:00</td>
                                 <td data-label="Kraj rezervacije">14:00</td>
-                                <td data-label="Za platiti">2 KM</td>
+                                <td data-label="Kod">dsf3449sdf</td>
                             </tr>
                             <tr>
                                 <td data-label="Username">Mujke</td>
@@ -150,7 +157,7 @@ function AdminReservationList() {
                                 <td data-label="Registracijske oznake">A12-A-123</td>
                                 <td data-label="Početak rezervacije">12:00</td>
                                 <td data-label="Kraj rezervacije">14:00</td>
-                                <td data-label="Za platiti">2 KM</td>
+                                <td data-label="Kod">dsf3449sdf</td>
                             </tr>
                         </>
                     )}

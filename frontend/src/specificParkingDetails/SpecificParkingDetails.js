@@ -5,6 +5,7 @@ import alta1 from "../images/alta1.jpg";
 import alta2 from "../images/alta2.jpg";
 import alta3 from "../images/alta3.png";
 import alta4 from "../images/alta4.jpg";
+import { Link } from "react-router-dom";
 
 function SpecificParkingDetails() {
 
@@ -39,6 +40,27 @@ function SpecificParkingDetails() {
         // broja 11
         if(counter > 11) {
             setRemoveLink(true);
+        }
+
+        //blok koda koji klikom na "Rezervisi parking" otvara prozor sa formom za rezervaciju
+        var formModal = document.getElementById("formModal");
+
+        var openFormLink = document.getElementById("openForm");
+
+        var closeSpan = document.getElementsByClassName("closeForm")[0];
+
+        openFormLink.onclick = function() {
+            formModal.style.display = "block";
+        }
+
+        closeSpan.onclick = function() {
+            formModal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target === formModal) {
+                formModal.style.display = "none";
+            }
         }
     }, [counter]);
 
@@ -120,6 +142,36 @@ function SpecificParkingDetails() {
                             <div className = "parking-detail">
                                 <h2>Kratke informacije vezane za parking: </h2>
                                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo eveniet veniam tempora fuga tenetur placeat sapiente architecto illum soluta consequuntur, aspernatur quidem at sequi ipsa!</p>
+                            </div>
+
+                            <div className="check-parking-reservation">
+                                <li href="#" id="openForm" className="reservation-button">Rezerviši parking</li>
+                            </div>
+                        </div>
+                        <div id="formModal" className="form-modal">                     
+                            <div className="container-post-parking-form">
+                                <span className="closeForm">&times;</span>
+                                <h1 className="title">Unesite neophodne podatke za rezervaciju parking prostora!</h1>
+                                <form>
+                                    <div className="grid">
+                                        <div className="form-group a">
+                                            <label htmlFor="name">Broj registracijskih tablica:</label>
+                                            <input id="name" type="text" />
+                                        </div>
+                                        <div className="form-group number-group">
+                                            <label htmlFor="nubmer">Izaberite vrijeme za početak rezervacije:</label>
+                                            <input id="reservationTimeBegin" type="text"></input>
+                                        </div>
+                                        <div className="form-group price-group">
+                                            <label htmlFor="number">Izaberite vrijeme za kraj rezervacije:</label>
+                                            <input id="reservationTimeEnd" type="text"></input>
+                                        </div>
+                                        
+                                    </div>
+                                    <div className="button-container">
+                                        <button className="button-post-form">Rezerviši</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
