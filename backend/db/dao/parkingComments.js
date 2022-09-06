@@ -10,7 +10,7 @@ const createComment = async (parking_id, created_comment_by_id, created_comment_
 }
 
 const readParkingComments = async (id) => {
-    const comments = await db.raw(`SELECT comment, grade FROM parking_comments WHERE parking_id = :id`, {id})
+    const comments = await db.raw(`SELECT created_comment_by_username, comment, grade, created_at FROM parking_comments WHERE parking_id = :id`, {id})
     return comments.rows
 }
 

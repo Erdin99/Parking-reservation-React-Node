@@ -35,7 +35,7 @@ function App() {
           <Route path="/parking/details" exact element={<ParkingDetails />}></Route>
           <Route path="/reservations" exact element={<AdminReservationList />}></Route>
           <Route path="/edit/post" exact element={<EditPost />}></Route>
-          <Route path="/parking/spot" exact element={<SpecificParkingDetails />}></Route>
+          <Route path="/parking/spot/:id" exact element={<SpecificParkingDetails />}></Route>
         </Routes>
       </BrowserRouter>
     </div>

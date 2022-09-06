@@ -3,7 +3,7 @@ import UsersService from '../service/users'
 
 const auth = (listOfRoles) => {
     return function(req, res, next) {
-        const token = req.header('Authorization').replace('Bearer ', '')
+        const token = req.header('Authorization')?.replace('Bearer ', '')
         //console.log('token->', token)
         jwt.verify(token, 'token', (error, decodedToken) => {
             if(error){

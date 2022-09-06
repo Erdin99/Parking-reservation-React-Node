@@ -12,13 +12,13 @@ router.post('/create/parking', auth([config.ROLES.bookingAdminRole]), (req, res)
     parkingSpotsController.createParkingSpot(res.locals.user, req, res)
 })
 
-router.get('/lists/parking', auth([config.ROLES.bookingAdminRole, config.ROLES.bookingUserRole]), parkingSpotsController.readAllParkings)
+router.get('/lists/parking', parkingSpotsController.readAllParkings)
 
 router.get('/mylist/parking', auth([config.ROLES.bookingAdminRole]), (req, res) => {
     parkingSpotsController.readMyList(res.locals.user, req, res)
 })
 
-router.get('/parking/details/:id', auth([config.ROLES.bookingAdminRole, config.ROLES.bookingUserRole]), (req, res) => {
+router.get('/parking/details/:id', (req, res) => {
     parkingSpotsController.readParkingDetails(req.params.id, req, res)
 })
 
