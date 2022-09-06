@@ -12,6 +12,7 @@ const createUsers = async (usersDto) => {
 
 const loginUser = async (email, password) => {
   const user = await UsersDAO.findUser(email)
+  const role = await UsersDAO.findUserRoleByMail(email)
   const token = jwt.sign({user}, 'token', {expiresIn: '7 days'})
 
   if (!user) {
@@ -29,7 +30,7 @@ const loginUser = async (email, password) => {
   //   throw new Error('Unable to login (salt password)')
   // }
 
-  return {user, token}
+  return {user, role, token}
 }
 
 const findUserRole = (id) => {
@@ -49,6 +50,13 @@ const updateUser =  (usersDto, usersDto1) => {
   return UsersDAO.updateUser(usersDto.id, first_name, last_name);
 } 
 
+const logout = (usersDto, req, res) => {
+  usersDto = {first_name: "", last_name: "", username: "", email: "", password: "", role_id: ""}
+
+  let token = jwt.sign(usersDto, 'kljuc', {expiresIn: '0s'});
+  res.cookie('token_login', token);
+}
+
 export default{
   createUsers,
   loginUser,
@@ -56,4 +64,5 @@ export default{
   readUserInfo,
   readUserInfoById,
   updateUser,
+  logout
 } 

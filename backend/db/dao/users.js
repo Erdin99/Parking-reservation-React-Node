@@ -19,6 +19,11 @@ const findUser = async (email) => {
   return object.rows[0]
 }
 
+const findUserRoleByMail = async (email) => {
+  const object = await db.raw(`SELECT us.role_id FROM user_roles us INNER JOIN users u ON us.user_id = u.id WHERE u.email = :email`, {email})
+  return object.rows[0]
+}
+
 const findUserRole = async (id) => {
   // const object = await db.raw(`SELECT r.name FROM roles r 
   // INNER JOIN user_roles ur ON r.id = ur.role_id 
@@ -46,6 +51,7 @@ const updateUser = async (id, first_name, last_name) => {
 export default {
   createUsers,
   findUser,
+  findUserRoleByMail,
   findUserRole,
   findUserByUsername,
   readUserInfo,

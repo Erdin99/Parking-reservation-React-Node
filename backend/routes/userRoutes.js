@@ -8,7 +8,7 @@ import {registration} from '../middleware/registration'
 const router = express.Router()
 
 // routes for users
-router.post('/users/signup',
+router.post('/users/signup', 
     validation, registration, usersController.createUser
 )
 
@@ -38,6 +38,10 @@ router.get('/users/info/:id', (req, res) => {
 
 router.patch('/update/user', auth([config.ROLES.bookingAdminRole, config.ROLES.bookingUserRole]), (req, res) => {
     usersController.updateUser(res.locals.user, req, res)
+})
+
+router.post('/logout', (req, res) => {
+    usersController.logout(res.locals.user, req, res)
 })
 
 export default router
