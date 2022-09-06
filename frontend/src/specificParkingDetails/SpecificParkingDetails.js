@@ -6,15 +6,23 @@ import alta2 from "../images/alta2.jpg";
 import alta3 from "../images/alta3.png";
 import alta4 from "../images/alta4.jpg";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 function SpecificParkingDetails() {
+
+    const parkingId = new URLSearchParams(window.location.search).get('id');
+    const [parkingDetails, setParkingDetails] = useState([]);
+    const [parkingComments, setParkingComments] = useState([]);
 
     const [counter, setCounter] = useState(5);
     const [removeLink, setRemoveLink] = useState(false); //ovo removeLink je za otvori jos komentara, u slucaju da nema vise komentara za prikaz, uklanja se link
     const [commentsSection, setCommentsSection] = useState(true);
     const [reviewSection, setReviewSection] = useState(false);
 
+   
+
     useEffect(() => {
+        getParkingDetails();
         //blok koda koji omogucava prelaz sa slike na sliku
         const imgs = document.querySelectorAll('.img-select a');
         const imgBtns = [...imgs];
@@ -29,7 +37,7 @@ function SpecificParkingDetails() {
         });
 
         function slideImage(){
-            const displayWidth = document.querySelector('.img-showcase img:first-child').clientWidth;
+             const displayWidth = document.querySelector('.img-showcase img:first-child').clientWidth;
 
             document.querySelector('.img-showcase').style.transform = `translateX(${- (imgId - 1) * displayWidth}px)`;
         }
@@ -38,7 +46,7 @@ function SpecificParkingDetails() {
 
         // u ovom slucaju je 11, taj broj ovisi o tome koliko komentara se nalazi za odredjeni parking prostor, te kad izvucemo sve elemente, duzinu liste koristimo u tom slucaju umjesto
         // broja 11
-        if(counter > 11) {
+        if(counter > parkingComments.length + 5) {
             setRemoveLink(true);
         }
 
@@ -62,6 +70,7 @@ function SpecificParkingDetails() {
                 formModal.style.display = "none";
             }
         }
+
     }, [counter]);
 
 
@@ -77,12 +86,24 @@ function SpecificParkingDetails() {
 
     function increaseCounter() {
         setCounter(counter + 5);
+        console.log('counter->', counter);
+        console.log('duzina->', parkingComments.length);
     }
 
     const runCallback = (cb) => {
         return cb();
     }
 
+    async function getParkingDetails() {
+        const response = await axios.get(`http://localhost:5000/parking/details/${parkingId}`).then(res => {
+            setParkingDetails(res.data.parkingDetail[0]);
+            setParkingComments(res.data.parkingComments);
+        }).catch(err => console.log(err));
+
+        return response;
+    }
+
+    
     return (
         <>
             <div>
@@ -123,30 +144,28 @@ function SpecificParkingDetails() {
                                 </div>
                             </div>
                         </div>
-                        <div className = "parking-content">
-                            <h2 className = "parking-title">Naziv parkinga</h2>
-                            <p className = "parking-link">Adresa parkinga: Neka adresa</p>
+                        <div className = "parking-content">             
+                            
+                            <h2 className = "parking-title">{parkingDetails.parking_name}</h2>
+                            <p className = "parking-link">Adresa parkinga: {parkingDetails.parking_address}</p>
                             
                             <div className = "parking-price">
-                                <p className = "new-price">Cijena (po satu): <span>1 KM </span></p>
+                                <p className = "new-price">Cijena (po satu): <span>{parkingDetails.price} KM</span></p>
                             </div>
 
                             <div className="number">
-                                <p>Kapacitet ovog parking prostora je: <span style={{color: "#256eff"}}>140</span></p>
-                            </div>
-
-                            <div className="number">
-                                <p>Broj trenutno slobodnih mjesta je: <span style={{color: "#256eff"}}>25</span></p>
+                                <p>Broj trenutno slobodnih mjesta je: <span style={{color: "#256eff"}}>{parkingDetails.number_of_parking_spots}</span></p>
                             </div>
 
                             <div className = "parking-detail">
                                 <h2>Kratke informacije vezane za parking: </h2>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo eveniet veniam tempora fuga tenetur placeat sapiente architecto illum soluta consequuntur, aspernatur quidem at sequi ipsa!</p>
+                                <p>{parkingDetails.basic_informations}</p>
                             </div>
 
                             <div className="check-parking-reservation">
                                 <li href="#" id="openForm" className="reservation-button">Rezerviši parking</li>
                             </div>
+                    
                         </div>
                         <div id="formModal" className="form-modal">                     
                             <div className="container-post-parking-form">
@@ -191,26 +210,29 @@ function SpecificParkingDetails() {
                             <div className="tab-pane fade show active" id="comments" role="tabpanel" aria-labelledby="comments-tab">
                                 <div>
                                     <h1 className="comment-title">Sekcija komentara korisnika parking prostora</h1>
+                                    {parkingComments.length === 0 && <h1 className="comment-info">Trenutno nema komentara za ovaj parking prostor</h1>}
                                     {
                                         runCallback(() => {
                                             const comments = [];
-                                            for (var i = 0; i < 12; i++) {
+                                            var i = 0;
+                                            {parkingComments.map((com) => {
                                                 if(i < counter) {
                                                     comments.push(
                                                         <div className="comment-box-inner">
-                                                            <h3>Username korisnika</h3>
-                                                            <p>Ovdje se pise nekakav komentar  dhf dhf dhf hdf hdfhdfh hdfjsf hjsdfh sdjsdjfhsdjf</p>
-                                                            <h6 className="comment-date"> April 18, 2013, 12:01 </h6>  
+                                                            <h3>{com.created_comment_by_username}</h3>
+                                                            <p>{com.comment}</p>
+                                                            <h6 className="comment-date"> {com.created_at} </h6>  
                                                         </div>
                                                     );
                                                 }
-                                            }
+                                                i++;
+                                            })}
                                             return comments;
                                         })
                                     }
                                 </div>
-                
-                                {removeLink !== true ? <li className="increase-counter" onClick={(e) => increaseCounter()}>Otvori još komentara</li> : ""}
+
+                                {parkingComments.length > 0 && removeLink !== true ? <li className="increase-counter" onClick={(e) => increaseCounter()}>Otvori još komentara</li> : ""}
                             </div>
                         }
                         { reviewSection &&
