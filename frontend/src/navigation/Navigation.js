@@ -3,11 +3,15 @@ import "./navigation.css";
 import "../usage/usage.css";
 import parking_logo from '../images/parking_logo.png'
 import { Link } from "react-router-dom";
+import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 
 function Navigation() {
     const adminRole = 1;
     const [role, setRole] = useState(2);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         //blok koda koji klikom na "Način korištenja" otvara prozor sa tekstom
@@ -51,7 +55,7 @@ function Navigation() {
                     }
                     <li><Link to="/about/me">O kreatoru sistema</Link></li>
                     <li href="#" id="openWindow">Način korištenja</li>
-                    <li><Link to="#">Logout</Link></li>
+                    <form className="logout-button-position" method="post" action="http://localhost:5000/logout"><button className="logout-button" type="submit">Logout</button></form>
                 </ul>
             </nav>
             

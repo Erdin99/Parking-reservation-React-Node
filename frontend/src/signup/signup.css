@@ -13,7 +13,7 @@ body {
   background-color: rgb(62, 112, 112);
   border-radius: 20px;
   box-sizing: border-box;
-  height: 670px;
+  height: 700px;
   padding: 25px;
   width: 500px;
   box-shadow: 25px 25px 25px 25px rgba(0, 0, 0, 0.5);
@@ -138,7 +138,6 @@ body {
   cursor: pointer;
   font-size: 18px;
   height: 50px;
-  margin-top: 38px;
   outline: 0;
   text-align: center;
   width: 100%;
@@ -149,12 +148,28 @@ body {
 }
 
 .info {
-  background-color: lightcoral;
+  background-color: rgb(240, 71, 71);
+  width: 70%;
   color: white;
   font-size: 12px;
-  font-weight: bold;
+  font-weight: 800;
   border-radius: 10px;
   text-align: center;
   margin-top: 5px;
   padding: 3px;
+  margin-bottom: -5px;
+  float: right;
+}
+
+.main-info {
+  background-color: rgb(240, 71, 71);
+  width: 100%;
+  color: white;
+  font-size: 12px;
+  font-weight: 800;
+  border-radius: 10px;
+  text-align: center;;
+  padding: 3px;
+  margin-top: -30px;
+  margin-bottom: -20px;
 }

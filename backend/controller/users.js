@@ -6,11 +6,13 @@ const createUser = async (req, res) => {
     try {
       const existEmail = await UsersDAO.findUser(req.body.email)
       const existUsername = await UsersDAO.findUserByUsername(req.body.username)
-      if (existEmail) {
-        return res.send('Email already exists')
-      }
       if (existUsername) {
-        return res.send('Username already exists')
+        //return res.send('Username already exists')
+        return res.status(422).send({message : 'Username već postoji'})
+      }
+      if (existEmail) {
+        //return res.send('Email already exists')
+        return res.status(422).send({message: "Email već postoji"})
       }
       await UsersService.createUsers(req.body)
       
@@ -64,10 +66,21 @@ const updateUser = async (usersDto, req, res) => {
   }
 }
 
+const logout = async (usersDto, req, res) => {
+  try {
+    UsersService.logout(usersDto, req, res)
+    res.redirect('http://localhost:3000/login')
+  } catch(err) {
+    console.log(err)
+    res.status(400).send()
+  }
+}
+
 export default {
   createUser,
   loginUser,
   readUserInfo,
   readUserInfoById,
-  updateUser
+  updateUser,
+  logout
 }

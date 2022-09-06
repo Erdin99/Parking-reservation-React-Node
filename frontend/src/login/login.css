@@ -130,3 +130,18 @@ body {
 .submit:active {
   background-color: rgb(94, 158, 158);
 }
+
+.login-info {
+  background-color: rgb(240, 71, 71);
+  width: 67%;
+  color: white;
+  font-size: 12px;
+  font-weight: 800;
+  border-radius: 10px;
+  text-align: center;;
+  padding: 3px;
+  margin-top: -25px;
+  margin-bottom: -15px;
+  margin-left: auto;
+  margin-right: auto;
+}

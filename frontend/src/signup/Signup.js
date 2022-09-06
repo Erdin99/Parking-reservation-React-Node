@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import "./signup.css";
-import axios from "axios";
+import axios from 'axios';
 import {useNavigate} from "react-router-dom";
 
 function Signup() {
 
     const [msg, setMsg] = useState("");
+    const [passwordMsg, setPasswordMsg] = useState("");
 
     const [first_name, setFirstName] = useState("");
     const [last_name, setLastName] = useState("");
@@ -19,77 +20,58 @@ function Signup() {
     const [fieldPassword, setFieldPassword] = useState(false);
 
     const navigate = useNavigate();
-    /*Naci nacin da se rijesi ova konekcija izmedju node-a i react-a*/
+    
     const handleSignUp = async (e) => {
         e.preventDefault();
 
-        const user = {
-            first_name: first_name,
-            last_name: last_name,
-            username: username,
-            email: email,
-            password: password,
-            role_id: role_id
+        if(username === "") {
+            setFieldUsername(true);
+        }
+        else {
+            setFieldUsername(false);
+        }
+        
+        if(email === "") {
+            setFieldMail(true);
+        }
+        else {
+            setFieldMail(false);
         }
 
-        console.log('first_name ->', JSON.stringify(user).first_name);
-        console.log('user first_name -> ', user.first_name)
-        console.log('json stringfy -> ', JSON.stringify(user))
+        if(password === "") {
+            setFieldPassword(true);
+        }
+        else {
+            setFieldPassword(false);
+        }
 
-        axios.post('http://localhost:5000/users/signup', JSON.stringify(user)).then(res => {
-            if(res.status === 201){
-                alert('Korisnik je dodan u bazu podataka!');
-                navigate("/login");
+        if(password.length < 8) {
+            setPasswordMsg('Šifra mora imati minimalno 8 karaktera!');
+        }
+
+        if(username !== "" && email !== "" && password !== "" && password.length >= 8) {
+            const user = {
+                first_name: first_name,
+                last_name: last_name,
+                username: username,
+                email: email,
+                password: password,
+                role_id: parseInt(role_id)
             }
-            else {
-                Promise.reject();
-            }
-        }).catch(err => alert('Nesto nije u redu!'));
 
-        // e.preventDefault();
-        // console.log("usao u handleSignUp");
-        // if(username === "") {
-        //     setFieldUsername(true);
-        // }
-        // else {
-        //     setFieldUsername(false);
-        // }
-        
-        // if(email === "") {
-        //     setFieldMail(true);
-        // }
-        // else {
-        //     setFieldMail(false);
-        // }
-
-        // if(password === "") {
-        //     setFieldPassword(true);
-        // }
-        // else {
-        //     setFieldPassword(false);
-        // }
-
-        // if(username !== "" && email !== "" && password !== "") {
-        //     const user = {
-        //         first_name: first_name,
-        //         last_name: last_name,
-        //         username: username,
-        //         email: email,
-        //         password: password,
-        //         role_id: parseInt(role_id)
-        //     }
-        //     // console.log('user -> ', JSON.stringify(user))
-
-        //     axios.post('http://localhost:5000/users/signup', JSON.stringify(user)).then(res => {
-        //         if(res.status === 201){
-        //             alert('Korisnik je dodan u bazu podataka!');
-        //             navigate("/users/login");
-        //         }
-        //         else {
-        //             Promise.reject();
-        //         }
-        //     }).catch(err => alert('Nesto nije u redu!'));
-        // }
+            axios.post('http://localhost:5000/users/signup', user).then(res => {
+                if(res.status === 201){
+                    alert('Uspješno ste se registrovali!');
+                    navigate("/login");
+                }
+                else {
+                    Promise.reject();
+                }
+            })
+            .catch(error => setMsg(error.response.data.message));
+            
+            
+        }
     }
 
     return (
@@ -99,7 +81,8 @@ function Signup() {
                     <form onSubmit={handleSignUp}>
                         <div className="title-signup">Dobro došli!</div>
                         <div className="subtitle">Kreirajte Vaš korisnički račun!</div>
-                        {msg && <p className="info">Ovdje ide poruka da postoji username ili mail</p>}
+                        {msg.length === 0 && passwordMsg.length > 0 ? <p className="main-info">{passwordMsg}</p>: ""}
+                        {msg.length === 0 ? "" : <p className="main-info">{msg}</p>}
                         <div className="input-container ic1">
                             <input id="firstname" className="input" name="firstName" value={first_name} type="text" placeholder=" " onChange={e => setFirstName(e.target.value)} />
                             <div className="cut"></div>
