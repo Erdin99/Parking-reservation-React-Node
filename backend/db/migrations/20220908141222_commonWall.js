@@ -6,6 +6,7 @@ exports.up = function(knex) {
         table.string('post', 255).notNullable();
         table.timestamps(true, true);
         table.string('created_post_by_username', 255).notNullable();
+        table.string('created_post_by_email', 255).notNullable();
     })  
 };
 

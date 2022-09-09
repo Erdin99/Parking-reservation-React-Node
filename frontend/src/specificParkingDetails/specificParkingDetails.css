@@ -108,7 +108,39 @@
     font-weight: bold;
 }
 
-.notify {
+.reservation_notification {
+    position: fixed;
+    top: 0%;
+    width: 100%;
+    height: 0;
+    box-sizing: border-box;
+    color: white;
+    text-align: center;
+    background: #03bf6d;
+    overflow: hidden;
+    box-sizing: border-box;
+    -webkit-transition: all ease 0.4s;
+    -moz-transition: all ease 0.4s;
+    -ms-transition: all ease 0.4s;
+    -o-transition: all ease 0.4s;
+    transition: all ease 0.4s;
+    z-index: 1;
+}
+
+#reservation_notification_type:before {
+    display: block;
+    margin-top: 15px;
+}
+
+.reservation_notification.active {
+    height: 50px;
+}
+
+.success_reservation:before {
+    content: "Uspješno ste rezervisali parking prostor! Pogledajte Vaš mail!";
+}
+
+.comment_notification {
     position: fixed;
     top: 40%;
     width: 100%;
@@ -126,15 +158,15 @@
     transition: all ease 0.4s;
 }
   
-#notifyType:before {
+#comment_notification_type:before {
     display: block;
     margin-top: 15px;
 }
   
-.notify.active {
+.comment_notification.active {
     height: 50px;
 }
   
-.success:before {
+.success_comment:before {
     content: "Uspješno ste upisali komentar za ovaj parking prostor!";
 }
