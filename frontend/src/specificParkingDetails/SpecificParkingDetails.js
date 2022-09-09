@@ -9,6 +9,7 @@ import axios from "axios";
 import moment from "moment";
 import {useNavigate} from "react-router-dom";
 import $ from 'jquery';
+import { Link } from "react-router-dom";
 
 function SpecificParkingDetails() {
 
@@ -77,11 +78,8 @@ function SpecificParkingDetails() {
                 formModal.style.display = "none";
             }
         }
-
-        //blok koda za alert poruku
        
-
-    }, [counter]);
+    }, [counter, parkingDetails, parkingComments]);
 
 
     function openCommentSection() {
@@ -111,6 +109,16 @@ function SpecificParkingDetails() {
         return response;
     }
 
+    function openReservationAlertMessage() {
+        $(".reservation_notification").toggleClass("active");
+            $("#reservation_notification_type").toggleClass("success_reservation");
+            setTimeout(function() {
+                $(".reservation_notification").removeClass("active");
+                $("#.reservation_notification_type").removeClass("success_reservation");
+        }, 3000);
+    
+    }
+
     function createReservation(e) {
         e.preventDefault();
         const data = {
@@ -121,7 +129,7 @@ function SpecificParkingDetails() {
 
         axios({
             method: "post",
-            url: `http://localhost:5000/create/reservation/:${parkingId}`,
+            url: `http://localhost:5000/create/reservation/${parkingId}`,
             data: data,
             credentials: 'include',
             headers: {
@@ -130,10 +138,23 @@ function SpecificParkingDetails() {
             },
             body: JSON.stringify(data),
         }).then(res => {
-            navigate(`/parking/spot/:?id=${parkingId}`)
+            navigate(`/parking/spot/:?id=${parkingId}`);
+            setRegistrationPlate("");
+            setBeginReservation("");
+            setEndReservation("");
+            openReservationAlertMessage()
         }).catch(error => {
             console.log(error)
         });
+    }
+
+    function openCommentAlertMessage() {
+        $(".comment_notification").toggleClass("active");
+                $("#comment_notification_type").toggleClass("success_comment");
+                setTimeout(function() {
+                    $(".comment_notification").removeClass("active");
+                    $("#.comment_notification_type").removeClass("success_comment");
+        }, 3000);
     }
 
 
@@ -159,12 +180,7 @@ function SpecificParkingDetails() {
         }).then(res => {
             navigate(`/parking/spot/:?id=${parkingId}`)
             setComment("");
-            $(".notify").toggleClass("active");
-            $("#notifyType").toggleClass("success");
-            setTimeout(function() {
-                $(".notify").removeClass("active");
-                $("#notifyType").removeClass("success");
-            }, 3000);
+            openCommentAlertMessage();
         }).catch(error => {
             console.log(error)
         });
@@ -229,12 +245,16 @@ function SpecificParkingDetails() {
                             </div>
 
                             <div className="check-parking-reservation">
-                                <li href="#" id="openForm" className="reservation-button">Rezerviši parking</li>
+                                { parkingDetails.number_of_parking_spots > 0 ?
+                                    <button id="openForm" className="reservation-button">Rezerviši parking</button> :
+                                    <button type="button" id="openForm" className="reservation-button" disabled>Nema slobodnih mjesta</button>
+                                }
                             </div>
                     
                         </div>
-                        <div class="notify"><span id="notifyType" class=""></span></div>
-                        <div id="formModal" className="form-modal">                     
+                    
+                        <div id="formModal" className="form-modal">    
+                            <div className="reservation_notification"><span id="reservation_notification_type" className=""></span></div>                 
                             <div className="container-post-parking-form">
                                 <span className="closeForm">&times;</span>
                                 <h1 className="title">Unesite neophodne podatke za rezervaciju parking prostora!</h1>
@@ -264,9 +284,10 @@ function SpecificParkingDetails() {
                 </div>
 
                 <div className="parking-info-tabs">
+                    <div className="comment_notification"><span id="comment_notification_type" className=""></span></div>
                     <ul className="nav nav-tabs" id="myTab" role="tablist">
                         <li className="nav-item">
-                            <a className="nav-link" id="comments-tab" data-toggle="tab" href="#comments" role="tab" aria-controls="comments" aria-selected="true" onClick={(e) => openCommentSection()} style={{fontWeight: commentsSection ? "bold": ""}}>Komentari</a>
+                            <Link to={`/parking/spot/:?id=${parkingId}`} className="nav-link" id="comments-tab" data-toggle="tab" role="tab" aria-controls="comments" aria-selected="true" onClick={(e) => openCommentSection()} style={{fontWeight: commentsSection ? "bold": ""}}>Komentari</Link>
                         </li>
                         <li className="nav-item">
                             <a className="nav-link" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review" aria-selected="false" onClick={(e) => openReviewSection()} style={{fontWeight: reviewSection ? "bold": ""}}>Napiši komentar</a>
@@ -288,7 +309,7 @@ function SpecificParkingDetails() {
                                                         <div className="comment-box-inner">
                                                             <h3>{com.created_comment_by_username}</h3>
                                                             <p>{com.comment} <br/> <br/> Ocjena: {com.grade}</p>
-                                                            <h6 className="comment-date"> {moment(com.created_at).utc().format('YYYY-MM-DD, h:mm:ss a')} </h6>  
+                                                            <h6 className="comment-date"> {moment(com.created_at).add(2, 'hours').utc().format('YYYY-MM-DD, h:mm:ss a')} </h6>  
                                                         </div>
                                                     );
                                                 }

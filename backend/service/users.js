@@ -15,7 +15,7 @@ const loginUser = async (req, res, email, password) => {
   const user = await UsersDAO.findUser(email)
   const role = await UsersDAO.findUserRoleByMail(email)
   const token = jwt.sign({user}, 'token', {expiresIn: '7 days'})
-  console.log('token u loginUser -> ', token)
+  //console.log('token u loginUser -> ', token)
   res.cookie('tokenlogin', token)
   
   if (!user) {

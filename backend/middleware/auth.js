@@ -5,7 +5,7 @@ import {LocalStorage} from 'node-localstorage'
 const auth = (listOfRoles) => {
     return function(req, res, next) {
         const token = req.header('Authorization').replace('Bearer ', '')
-        console.log('token ->', token)
+        //console.log('token ->', token)
         jwt.verify(token, 'token', (error, decodedToken) => {
             if(error){
                 res.status(401).json({
