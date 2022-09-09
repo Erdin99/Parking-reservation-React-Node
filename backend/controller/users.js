@@ -24,8 +24,7 @@ const createUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
   try {
-    const user = await UsersService.loginUser(req.body.email, req.body.password)
-    
+    const user = await UsersService.loginUser(req, res, req.body.email, req.body.password)
     res.send({ user })
   } catch(err) {
     console.log(err)

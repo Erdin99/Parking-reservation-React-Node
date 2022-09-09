@@ -17,8 +17,8 @@ import EditPost from "./editPost/EditPost";
 import SpecificParkingDetails from "./specificParkingDetails/SpecificParkingDetails";
 
 
-function App() {
 
+function App() {
   return (
     <div>
       <BrowserRouter>
@@ -35,7 +35,7 @@ function App() {
           <Route path="/parking/details" exact element={<ParkingDetails />}></Route>
           <Route path="/reservations" exact element={<AdminReservationList />}></Route>
           <Route path="/edit/post" exact element={<EditPost />}></Route>
-          <Route path="/parking/spot/:id" exact element={<SpecificParkingDetails />}></Route>
+          <Route path="/parking/spot/:id" exact element={<SpecificParkingDetails/>}></Route>
         </Routes>
       </BrowserRouter>
     </div>

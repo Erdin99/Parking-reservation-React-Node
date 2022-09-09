@@ -1,10 +1,11 @@
 import jwt, { decode } from 'jsonwebtoken'
 import UsersService from '../service/users'
+import {LocalStorage} from 'node-localstorage'
 
 const auth = (listOfRoles) => {
     return function(req, res, next) {
-        const token = req.header('Authorization')?.replace('Bearer ', '')
-        //console.log('token->', token)
+        const token = req.header('Authorization').replace('Bearer ', '')
+        console.log('token ->', token)
         jwt.verify(token, 'token', (error, decodedToken) => {
             if(error){
                 res.status(401).json({
@@ -36,6 +37,7 @@ const auth = (listOfRoles) => {
             }
         })
     }
+
 }
 
 export default auth

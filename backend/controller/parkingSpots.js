@@ -11,9 +11,9 @@ const createParkingSpot = async (parkingSpotsDto, req, res) => {
     }
 }
 
-const readAllParkings = async (req, res) => {
+const readAllParkings = async (filter, req, res) => {
   try {
-    const parkings = await ParkingService.readAllParkings()
+    const parkings = await ParkingService.readAllParkings(filter)
     res.send({ parkings })
   } catch (err) {
     console.log(err)

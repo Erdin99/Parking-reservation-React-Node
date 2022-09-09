@@ -12,7 +12,9 @@ router.post('/create/parking', auth([config.ROLES.bookingAdminRole]), (req, res)
     parkingSpotsController.createParkingSpot(res.locals.user, req, res)
 })
 
-router.get('/lists/parking', parkingSpotsController.readAllParkings)
+router.get('/lists/parking/:filter', auth([config.ROLES.bookingUserRole]), (req, res) => { 
+    parkingSpotsController.readAllParkings(req.params.filter, req, res)
+})
 
 router.get('/mylist/parking', auth([config.ROLES.bookingAdminRole]), (req, res) => {
     parkingSpotsController.readMyList(res.locals.user, req, res)

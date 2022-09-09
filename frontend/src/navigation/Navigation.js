@@ -36,6 +36,11 @@ function Navigation() {
         }
     })
 
+    function handleLogout() {
+        localStorage.removeItem('user');
+    }
+
+
     return( 
         <>
             <nav role="navigation" className="primary-navigation">
@@ -55,7 +60,7 @@ function Navigation() {
                     }
                     <li><Link to="/about/me">O kreatoru sistema</Link></li>
                     <li href="#" id="openWindow">Način korištenja</li>
-                    <form className="logout-button-position" method="post" action="http://localhost:5000/logout"><button className="logout-button" type="submit">Logout</button></form>
+                    <form className="logout-button-position" method="post" action="http://localhost:5000/logout"><button className="logout-button" type="submit" onClick={handleLogout}>Logout</button></form>
                 </ul>
             </nav>
             

@@ -35,19 +35,45 @@ function Login() {
 
 
         if(email !== "" && password !== "") {
+
             const user = {
                 email: email,
                 password: password,
             }
-            axios.post('http://localhost:5000/users/login', user).then(res => {
+            // axios.post('http://localhost:5000/users/login', user).then(res => {
+            //     if(res.data.user.role.role_id === 1) {
+            //         navigate("/users/admin");
+            //     }
+            //     else {
+            //         navigate("/users/user");
+            //     }
+            // })
+            // .catch(error => setMsg(true));
+
+            axios({
+                method: "post",
+                url: 'http://localhost:5000/users/login',
+                data: user,
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(user),
+            }).then(res => {
+                localStorage.setItem('user', JSON.stringify(res.data.user.token));
+                console.log("res token -> ", res.data.user.token);
                 if(res.data.user.role.role_id === 1) {
                     navigate("/users/admin");
+                    window.location.reload();
                 }
                 else {
-                    navigate("/users/user");
+                   navigate("/users/user");
                 }
-            })
-            .catch(error => setMsg(true));
+            }).catch(error => { 
+                setMsg(true);
+                console.log(error);
+            });
+
         }
     } 
 

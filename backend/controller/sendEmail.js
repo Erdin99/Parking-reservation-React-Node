@@ -1,4 +1,4 @@
-    import nodemailer from 'nodemailer'
+import nodemailer from 'nodemailer'
 
 const sendEmail = (email, code) => {
       var transporter = nodemailer.createTransport({
@@ -12,8 +12,8 @@ const sendEmail = (email, code) => {
       var mailOptions = {
         from: process.env.EMAIL,
         to: email,
-        subject: 'Sending information about your parking reservation!',
-        text: 'Thank you for your reservation! Your reservation code is: ' + code + "!"
+        subject: 'Infromacija vezana za rezervisanje parking prostora!',
+        text: 'Hvala na korištenju naše aplikacije za rezervaciju parking prostora! Vaš kod za rezervaciju je: ' + code + "!" + " Molimo Vas da vaš kod čuvate, jer je neophodan za potvrdu rezervacije."
       };
       
       transporter.sendMail(mailOptions, function(error, info){
