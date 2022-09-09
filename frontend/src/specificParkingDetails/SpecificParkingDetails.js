@@ -5,8 +5,10 @@ import alta1 from "../images/alta1.jpg";
 import alta2 from "../images/alta2.jpg";
 import alta3 from "../images/alta3.png";
 import alta4 from "../images/alta4.jpg";
-import { Link } from "react-router-dom";
 import axios from "axios";
+import moment from "moment";
+import {useNavigate} from "react-router-dom";
+import $ from 'jquery';
 
 function SpecificParkingDetails() {
 
@@ -19,7 +21,14 @@ function SpecificParkingDetails() {
     const [commentsSection, setCommentsSection] = useState(true);
     const [reviewSection, setReviewSection] = useState(false);
 
-   
+    const [registrationPlate, setRegistrationPlate] = useState("");
+    const [beginReservation, setBeginReservation] = useState("");
+    const [endReservation, setEndReservation] = useState("");
+
+    const [grade, setGrade] = useState("1");
+    const [comment, setComment] = useState("");
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         getParkingDetails();
@@ -44,8 +53,6 @@ function SpecificParkingDetails() {
 
         window.addEventListener('resize', slideImage);
 
-        // u ovom slucaju je 11, taj broj ovisi o tome koliko komentara se nalazi za odredjeni parking prostor, te kad izvucemo sve elemente, duzinu liste koristimo u tom slucaju umjesto
-        // broja 11
         if(counter > parkingComments.length + 5) {
             setRemoveLink(true);
         }
@@ -71,6 +78,9 @@ function SpecificParkingDetails() {
             }
         }
 
+        //blok koda za alert poruku
+       
+
     }, [counter]);
 
 
@@ -86,8 +96,6 @@ function SpecificParkingDetails() {
 
     function increaseCounter() {
         setCounter(counter + 5);
-        console.log('counter->', counter);
-        console.log('duzina->', parkingComments.length);
     }
 
     const runCallback = (cb) => {
@@ -103,6 +111,64 @@ function SpecificParkingDetails() {
         return response;
     }
 
+    function createReservation(e) {
+        e.preventDefault();
+        const data = {
+            registration_plates: registrationPlate,
+            begin_reservation: beginReservation,
+            end_reservation: endReservation
+        }
+
+        axios({
+            method: "post",
+            url: `http://localhost:5000/create/reservation/:${parkingId}`,
+            data: data,
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: JSON.parse(localStorage.getItem("user"))
+            },
+            body: JSON.stringify(data),
+        }).then(res => {
+            navigate(`/parking/spot/:?id=${parkingId}`)
+        }).catch(error => {
+            console.log(error)
+        });
+    }
+
+
+    function createParkingComment(e) {
+        e.preventDefault();
+
+        const data = {
+            comment: comment,
+            grade: grade
+        }
+        
+        //konekcija za kreiranje i unosenja komentara za parking prostor
+        axios({
+            method: "post",
+            url: `http://localhost:5000/create/comment/${parkingId}`,
+            data: data,
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: JSON.parse(localStorage.getItem("user"))
+            },
+            body: JSON.stringify(data),
+        }).then(res => {
+            navigate(`/parking/spot/:?id=${parkingId}`)
+            setComment("");
+            $(".notify").toggleClass("active");
+            $("#notifyType").toggleClass("success");
+            setTimeout(function() {
+                $(".notify").removeClass("active");
+                $("#notifyType").removeClass("success");
+            }, 3000);
+        }).catch(error => {
+            console.log(error)
+        });
+    }
     
     return (
         <>
@@ -167,28 +233,29 @@ function SpecificParkingDetails() {
                             </div>
                     
                         </div>
+                        <div class="notify"><span id="notifyType" class=""></span></div>
                         <div id="formModal" className="form-modal">                     
                             <div className="container-post-parking-form">
                                 <span className="closeForm">&times;</span>
                                 <h1 className="title">Unesite neophodne podatke za rezervaciju parking prostora!</h1>
-                                <form>
+                                <form onSubmit={createReservation}>
                                     <div className="grid">
                                         <div className="form-group a">
                                             <label htmlFor="name">Broj registracijskih tablica:</label>
-                                            <input id="name" type="text" />
+                                            <input id="name" type="text" value={registrationPlate} onChange={e => setRegistrationPlate(e.target.value)} required />
                                         </div>
                                         <div className="form-group number-group">
                                             <label htmlFor="nubmer">Izaberite vrijeme za početak rezervacije:</label>
-                                            <input id="reservationTimeBegin" type="text"></input>
+                                            <input id="reservationTimeBegin" type="text" value={beginReservation} onChange={e => setBeginReservation(e.target.value)}></input>
                                         </div>
                                         <div className="form-group price-group">
                                             <label htmlFor="number">Izaberite vrijeme za kraj rezervacije:</label>
-                                            <input id="reservationTimeEnd" type="text"></input>
+                                            <input id="reservationTimeEnd" type="text" value={endReservation} onChange={e => setEndReservation(e.target.value)}></input>
                                         </div>
                                         
                                     </div>
                                     <div className="button-container">
-                                        <button className="button-post-form">Rezerviši</button>
+                                        <button className="button-post-form" type="submit">Rezerviši</button>
                                     </div>
                                 </form>
                             </div>
@@ -220,8 +287,8 @@ function SpecificParkingDetails() {
                                                     comments.push(
                                                         <div className="comment-box-inner">
                                                             <h3>{com.created_comment_by_username}</h3>
-                                                            <p>{com.comment}</p>
-                                                            <h6 className="comment-date"> {com.created_at} </h6>  
+                                                            <p>{com.comment} <br/> <br/> Ocjena: {com.grade}</p>
+                                                            <h6 className="comment-date"> {moment(com.created_at).utc().format('YYYY-MM-DD, h:mm:ss a')} </h6>  
                                                         </div>
                                                     );
                                                 }
@@ -239,27 +306,24 @@ function SpecificParkingDetails() {
                             <div className="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
                                 <div className="review-heading">Upišite komentar</div>
                                 <p className="mb-20">Neophodno je ispuniti svako naznačeno polje. Naznačeno polje je sa oznakom <span className="star">*</span>.</p>
-                                <form className="review-form">
+                                <form className="review-form" onSubmit={createParkingComment}>
+
+                                    <div>
+                                        <label htmlFor="grade">Ocjena:<span className="star">*</span> </label>
+                                        <select name="grade" id="grade" onChange={e => setGrade(e.target.value)} required>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
                                     
                                     <div className="form-group">
                                         <label>Vaš komentar <span className="star">*</span></label>
-                                        <textarea className="form-control" rows="10" required></textarea>
+                                        <textarea className="form-control" rows="10" value={comment} onChange={e => setComment(e.target.value)} required></textarea>
                                     </div>
-                                    <div>
-                                        <div className="col-md-6">
-                                            <div className="form-group">
-                                                <label>Username <span className="star">*</span></label>
-                                                <input type="text" name="" className="form-control" placeholder="Username" required/>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-6">
-                                            <div className="form-group">
-                                                <label>Email <span className="star">*</span></label>
-                                                <input type="text" name="" className="form-control" placeholder="Email" required/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button className="round-black-btn">Pošalji</button>
+                                    <button type="submit" className="round-black-btn">Pošalji</button>
                                 </form>
                             </div>
                         }

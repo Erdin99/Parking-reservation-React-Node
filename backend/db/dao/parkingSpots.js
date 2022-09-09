@@ -15,6 +15,26 @@ const readAllParkings = async () => {
     return allParkings.rows
 }
 
+const readAllCheapestToExpensiveParkings = async () => {
+    const allCheapestToExpensiveParkings = await db.raw(`SELECT * FROM parking_spots ORDER BY price`)
+    return allCheapestToExpensiveParkings.rows
+}
+
+const readAllExpensiveToCheapestParkings = async () => {
+    const allExpensiveToCheapestParkings = await db.raw(`SELECT * FROM parking_spots ORDER BY price DESC`)
+    return allExpensiveToCheapestParkings.rows
+}
+
+const readAllMostToLeastParkingSpaces = async () => {
+    const allMostToLeastParkingSpaces = await db.raw(`SELECT * FROM parking_spots ORDER BY number_of_parking_spots DESC`)
+    return allMostToLeastParkingSpaces.rows
+}
+
+const readAllLeastToMostParkingSpaces = async () => {
+    const allLeastToMostParkingSpaces = await db.raw(`SELECT * FROM parking_spots ORDER BY number_of_parking_spots`)
+    return allLeastToMostParkingSpaces.rows
+}
+
 const readMyList = async (id) => {
     const myParkings = await db.raw(`SELECT * FROM parking_spots WHERE created_by_id = :id`, {id})
     return myParkings.rows
@@ -46,6 +66,10 @@ const deleteParking = async (id) => {
 export default {
     createParkingSpot,
     readAllParkings,
+    readAllCheapestToExpensiveParkings,
+    readAllExpensiveToCheapestParkings,
+    readAllMostToLeastParkingSpaces,
+    readAllLeastToMostParkingSpaces,
     readMyList,
     readParkingDetails,
     findValidUserById,

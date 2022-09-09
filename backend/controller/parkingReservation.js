@@ -22,8 +22,7 @@ const createParkingReservation = async (id, parkingReservationDto, req, res) => 
       await ParkingReservationService.createParkingReservation(id, parkingReservationDto, reservation_parking_name, reservation_parking_address, req.body, code, status, reservation_created_by_id.created_by_id)
       
       await ParkingReservationDAO.updateNumberOfParkingSpots(id, (numberOfFreeSpots.number_of_parking_spots-1))
-      
-      const email = JSON.parse(parkingReservationDto).email
+      const email = JSON.parse(JSON.stringify(parkingReservationDto)).email
       sendEmail(email, code)
       
       res.send('Successful created parking reservation!')

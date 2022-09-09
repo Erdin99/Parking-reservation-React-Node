@@ -1,6 +1,7 @@
 import UsersDAO from '../db/dao/users'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
+import { cookie } from 'express-validator';
 
 const createUsers = async (usersDto) => {
   const { first_name, last_name, username, email, password, role_id } = usersDto;
@@ -10,11 +11,13 @@ const createUsers = async (usersDto) => {
   UsersDAO.createUsers(first_name, last_name, username, email, hashedPassword, hash, role_id);
 }
 
-const loginUser = async (email, password) => {
+const loginUser = async (req, res, email, password) => {
   const user = await UsersDAO.findUser(email)
   const role = await UsersDAO.findUserRoleByMail(email)
   const token = jwt.sign({user}, 'token', {expiresIn: '7 days'})
-
+  console.log('token u loginUser -> ', token)
+  res.cookie('tokenlogin', token)
+  
   if (!user) {
     throw new Error('Unable to login (email)')
   }
@@ -29,7 +32,6 @@ const loginUser = async (email, password) => {
   // if(!isMatchhSaltPassword) {
   //   throw new Error('Unable to login (salt password)')
   // }
-
   return {user, role, token}
 }
 
@@ -50,11 +52,10 @@ const updateUser =  (usersDto, usersDto1) => {
   return UsersDAO.updateUser(usersDto.id, first_name, last_name);
 } 
 
-const logout = (usersDto, req, res) => {
-  usersDto = {first_name: "", last_name: "", username: "", email: "", password: "", role_id: ""}
-
-  let token = jwt.sign(usersDto, 'kljuc', {expiresIn: '0s'});
-  res.cookie('token_login', token);
+const logout = (user, req, res) => {
+  user = {first_name: "", last_name: "", username: "", email: "", password: "", role_id: ""}
+  const token = jwt.sign(user, 'token', {expiresIn: '0 s'})
+  //console.log('token logout->', token)
 }
 
 export default{

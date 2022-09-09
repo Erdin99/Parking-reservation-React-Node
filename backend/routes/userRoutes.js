@@ -12,7 +12,7 @@ router.post('/users/signup',
     validation, registration, usersController.createUser
 )
 
-router.post('/users/login',
+router.post('/users/login', 
     usersController.loginUser
 )
 
