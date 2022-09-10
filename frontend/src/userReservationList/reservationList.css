@@ -10,7 +10,7 @@
 .reservation-list-title::after{
     content: "";
     position: absolute;
-    left: 44%;
+    left: 46%;
     top: 150%;
     bottom: 0;
     height: 4px;

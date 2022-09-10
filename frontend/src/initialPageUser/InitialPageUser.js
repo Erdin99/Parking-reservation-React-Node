@@ -31,7 +31,7 @@ function InitialPageAdmin() {
             }
         }).then(res => {
             setParkingList(res.data.parkings);
-            console.log(parkingList)
+            //console.log(parkingList)
         }).catch(err => console.log(err))
     }
 

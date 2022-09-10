@@ -32,8 +32,8 @@ function App() {
           <Route path="/reservation/list" exact element={<ReservationList />}></Route>
           <Route path="/parking/space/form" exact element={<ParkingSpaceForm />}></Route>
           <Route path="/about/me" exact element={<AboutMe />}></Route>
-          <Route path="/parking/details" exact element={<ParkingDetails />}></Route>
-          <Route path="/reservations" exact element={<AdminReservationList />}></Route>
+          <Route path="/parking/details/:id" exact element={<ParkingDetails />}></Route>
+          <Route path="/reservations/:id" exact element={<AdminReservationList />}></Route>
           <Route path="/edit/post" exact element={<EditPost />}></Route>
           <Route path="/parking/spot/:id" exact element={<SpecificParkingDetails/>}></Route>
         </Routes>

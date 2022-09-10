@@ -7,13 +7,20 @@ import alta2 from "../images/alta2.jpg";
 import alta3 from "../images/alta3.png";
 import alta4 from "../images/alta4.jpg";
 import { Link } from "react-router-dom";
+import axios from 'axios';
 
 function ParkingDetails() {
+
+    const parkingId = new URLSearchParams(window.location.search).get('id');
+    const [myParkingDetails, setMyParkingDetails] = useState([]);
+    const [myParkingComments, setMyParkingComments] = useState([]);
 
     const [counter, setCounter] = useState(5);
     const [removeLink, setRemoveLink] = useState(false); //ovo removeLink je za otvori jos komentara, u slucaju da nema vise komentara za prikaz, uklanja se link
 
     useEffect(() => {
+        getMyParkingDetails();
+
         //blok koda koji omogucava prelaz sa slike na sliku
         const imgs = document.querySelectorAll('.img-select a');
         const imgBtns = [...imgs];
@@ -41,6 +48,20 @@ function ParkingDetails() {
             setRemoveLink(true);
         }
     }, [counter]);
+
+    function getMyParkingDetails() {
+        axios({
+            method: "get",
+            url: `http://localhost:5000/parking/details/${parkingId}`,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: JSON.parse(localStorage.getItem("user"))
+            }
+        }).then(res => {
+            setMyParkingDetails(res.data.parkingDetail[0])
+            setMyParkingComments(res.data.parkingComments);
+        }).catch(err => console.log(err))
+    }
 
     function increaseCounter() {
         setCounter(counter + 5);
@@ -91,28 +112,24 @@ function ParkingDetails() {
                             </div>
                         </div>
                         <div className = "parking-content">
-                            <h2 className = "parking-title">Naziv parkinga</h2>
-                            <p className = "parking-link">Adresa parkinga: Neka adresa</p>
+                            <h2 className = "parking-title">{myParkingDetails.parking_name}</h2>
+                            <p className = "parking-link">Adresa parkinga: {myParkingDetails.parking_address}</p>
                             
                             <div className = "parking-price">
-                                <p className = "new-price">Cijena (po satu): <span>1 KM </span></p>
+                                <p className = "new-price">Cijena (po satu): <span>{myParkingDetails.price} KM </span></p>
                             </div>
 
                             <div className="number">
-                                <p>Kapacitet ovog parking prostora je: <span style={{color: "#256eff"}}>140</span></p>
-                            </div>
-
-                            <div className="number">
-                                <p>Broj trenutno slobodnih mjesta je: <span style={{color: "#256eff"}}>25</span></p>
+                                <p>Broj trenutno slobodnih mjesta je: <span style={{color: "#256eff"}}>{myParkingDetails.number_of_parking_spots}</span></p>
                             </div>
 
                             <div className = "parking-detail">
                                 <h2>Kratke informacije vezane za parking: </h2>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo eveniet veniam tempora fuga tenetur placeat sapiente architecto illum soluta consequuntur, aspernatur quidem at sequi ipsa!</p>
+                                <p>{myParkingDetails.basic_informations}</p>
                             </div>
 
                             <div className="check-parking-reservation">
-                                <Link to="/reservations" className="check-reservation-button">Pogledaj rezervacije</Link>
+                                <Link to={`/reservations/:?id=${parkingId}`} className="check-reservation-button">Pogledaj rezervacije</Link>
                             </div>
 
                         </div>

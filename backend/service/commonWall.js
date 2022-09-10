@@ -2,7 +2,7 @@ import CommonWallDao from '../db/dao/commonWall'
 
 const createPost = (postDto, postDto1) => {
     const {post} = postDto1
-    return CommonWallDao.createPost(postDto.id, postDto.username, post)
+    return CommonWallDao.createPost(postDto.id, postDto.username, postDto.email, post)
 }
 
 const readAllPosts = () => {
