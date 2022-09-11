@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 function SpecificParkingDetails() {
 
     const parkingId = new URLSearchParams(window.location.search).get('id');
+    const userMail = JSON.parse(localStorage.getItem('userMail'))
     const [parkingDetails, setParkingDetails] = useState([]);
     const [parkingComments, setParkingComments] = useState([]);
 
@@ -31,8 +32,21 @@ function SpecificParkingDetails() {
 
     const navigate = useNavigate();
 
+    function padTo2Digits(num) {
+        return num.toString().padStart(2, '0');
+    }
+
+    function formatDate(date) {
+        return [
+          date.getFullYear(),
+          padTo2Digits(date.getMonth() + 1),
+          padTo2Digits(date.getDate()),
+        ].join('-');
+    }
+
     useEffect(() => {
         getParkingDetails();
+
         //blok koda koji omogucava prelaz sa slike na sliku
         const imgs = document.querySelectorAll('.img-select a');
         const imgBtns = [...imgs];
@@ -124,7 +138,8 @@ function SpecificParkingDetails() {
         const data = {
             registration_plates: registrationPlate,
             begin_reservation: beginReservation,
-            end_reservation: endReservation
+            end_reservation: endReservation,
+            reservation_date: formatDate(new Date())
         }
 
         axios({
@@ -184,6 +199,22 @@ function SpecificParkingDetails() {
         }).catch(error => {
             console.log(error)
         });
+    }
+
+    function deleteComment(id) {
+        axios({
+            method: "delete",
+            url: `http://localhost:5000/delete/comment/${id}`,
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: JSON.parse(localStorage.getItem("user"))
+            }
+        }).then(res => {
+            navigate(`/parking/spot/:?id=${parkingId}`)
+        }).catch(error => {
+            console.log(error)
+        })
     }
     
     return (
@@ -309,6 +340,7 @@ function SpecificParkingDetails() {
                                                         <div className="comment-box-inner">
                                                             <h3>{com.created_comment_by_username}</h3>
                                                             <p>{com.comment} <br/> <br/> Ocjena: {com.grade}</p>
+                                                            {com.created_comment_by_email === userMail ? <button className="delete_comment" onClick={() => deleteComment(com.id)}>Obriši komentar</button> : ""}
                                                             <h6 className="comment-date"> {moment(com.created_at).add(2, 'hours').utc().format('YYYY-MM-DD, h:mm:ss a')} </h6>  
                                                         </div>
                                                     );

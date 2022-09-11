@@ -15,15 +15,15 @@ const getId = async (id) => {
     return createdById.rows[0]
 }
 
-const createParkingReservation = async (reserved_by_id, reserved_by_username, reserved_by_email, reservation_parking_id, reservation_parking_name, reservation_parking_address, registration_plates, begin_reservation, end_reservation, code, status, reservation_created_by_id) => {
+const createParkingReservation = async (reserved_by_id, reserved_by_username, reserved_by_email, reservation_parking_id, reservation_parking_name, reservation_parking_address, registration_plates, begin_reservation, end_reservation, reservation_date, code, status, reservation_created_by_id) => {
     const createdReservation = await db.raw(`INSERT INTO parking_reservation 
     (reserved_by_id, reserved_by_username, reserved_by_email, reservation_parking_id, reservation_parking_name, 
-    reservation_parking_address, registration_plates, begin_reservation, end_reservation, code, status, reservation_created_by_id) 
+    reservation_parking_address, registration_plates, begin_reservation, end_reservation, code, status, reservation_created_by_id, reservation_date) 
     VALUES 
     (:reserved_by_id, :reserved_by_username, :reserved_by_email, :reservation_parking_id, :reservation_parking_name, 
-    :reservation_parking_address, :registration_plates, :begin_reservation, :end_reservation, :code, :status, :reservation_created_by_id)`,
+    :reservation_parking_address, :registration_plates, :begin_reservation, :end_reservation, :code, :status, :reservation_created_by_id, :reservation_date)`,
     {reserved_by_id, reserved_by_username, reserved_by_email, reservation_parking_id, reservation_parking_name, 
-    reservation_parking_address, registration_plates, begin_reservation, end_reservation, code, status, reservation_created_by_id})
+    reservation_parking_address, registration_plates, begin_reservation, end_reservation, code, status, reservation_created_by_id, reservation_date})
     return createdReservation.rows[0]
 }
 

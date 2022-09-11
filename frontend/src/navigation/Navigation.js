@@ -9,7 +9,7 @@ import {useNavigate} from "react-router-dom";
 
 function Navigation() {
     const adminRole = 1;
-    const [role, setRole] = useState(2);
+    const [role, setRole] = useState(1);
 
     const navigate = useNavigate();
 

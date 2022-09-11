@@ -1,12 +1,60 @@
 import React, { useEffect, useState } from "react";
 import Navigation from "../navigation/Navigation";
 import "./reservationList.css";
+import axios from "axios";
 
 function ReservationList() {
     
     const [button1, setButton1] = useState(true);
     const [button2, setButton2] = useState(false);
     const [button3, setButton3] = useState(false);
+
+    const [myReservations, setMyReservations] = useState([])
+    const [myRefusedReservations, setMyRefusedReservations] = useState([])
+
+    useEffect(() => {
+        getMyReservations();
+        getRefusedReservations();
+    }, [myReservations, myRefusedReservations]);
+
+    function getMyReservations() {
+        
+        axios({
+            method: "get",
+            url: `http://localhost:5000/my/reservations`,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: JSON.parse(localStorage.getItem("user"))
+            }
+        }).then(res => {
+            setMyReservations(res.data.listOfMyReservations);
+        }).catch(err => console.log(err))
+    }
+
+    function getRefusedReservations() {
+        axios({
+            method: "get",
+            url: `http://localhost:5000/my/refused/reservations`,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: JSON.parse(localStorage.getItem("user"))
+            }
+        }).then(res => {
+            setMyRefusedReservations(res.data.listOfMyRefusedReservations);
+        }).catch(err => console.log(err))
+    }
+
+    function padTo2Digits(num) {
+        return num.toString().padStart(2, '0');
+    }
+
+    function formatDate(date) {
+        return [
+          date.getFullYear(),
+          padTo2Digits(date.getMonth() + 1),
+          padTo2Digits(date.getDate()),
+        ].join('-');
+    }
 
     function showTodaysReservations() {
         setButton1(true);
@@ -26,6 +74,17 @@ function ReservationList() {
         setButton3(true);
     }
 
+    function delayReservation(id) {
+        axios({
+            method: "patch",
+            url: `http://localhost:5000/refuse/reservation/${id}`,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: JSON.parse(localStorage.getItem("user"))
+            }
+        }).catch(err => console.log(err))
+    }
+
     
     return(
         <>
@@ -33,7 +92,7 @@ function ReservationList() {
                 <Navigation />
             </div>
             <div className="content-admin">
-                {button1 && <h1 className="reservation-list-title">Rezervisana mjesta za: 3.9.2022.</h1>}
+                {button1 && <h1 className="reservation-list-title">Rezervisana mjesta za: {formatDate(new Date())}</h1>}
                 
                 <div className="three-button-row">
                     <button className="button-list-option" onClick={(e) => showTodaysReservations()} style={{backgroundColor: button1 === true?"#26272b":"white", color: button1 === false?"black":"white"}}>Današnje rezervacije</button>
@@ -50,101 +109,75 @@ function ReservationList() {
                         <th>Početak rezervacije</th>
                         <th>Kraj rezervacije</th>
                         <th>Status rezervacije</th>
-                        <th>{button1 ? "Odgodi rezervaciju" : "Obriši"}</th>
+                        <th>Kod</th>
+                        {button1 ? <th>Odgodi rezervaciju</th> : <th>Datum rezervacije</th>}
                     </tr>
                     {button1 && (
                         <>
-                            <tr>
-                                <td data-label="Username">Mujke</td>
-                                <td data-label="Parking">Alta parking</td>
-                                <td data-label="Adresa parkinga">Franca Lehara 2</td>
-                                <td data-label="Registracijske oznake">A12-A-123</td>
-                                <td data-label="Početak rezervacije">12:00</td>
-                                <td data-label="Kraj rezervacije">14:00</td>
-                                <td data-label="Status rezervacije">Odobreno</td>
-                                <td data-label="Odgodi rezervaciju"><button className="delete-button">Odgodi</button></td>
-                            </tr>
-                            <tr>
-                                <td data-label="Username">Mujke</td>
-                                <td data-label="Parking">Trg Austrije</td>
-                                <td data-label="Adresa parkinga">Neka ulica 23</td>
-                                <td data-label="Registracijske oznake">A12-A-123</td>
-                                <td data-label="Početak rezervacije">16:00</td>
-                                <td data-label="Kraj rezervacije">18:00</td>
-                                <td data-label="Status rezervacije">Odbijeno</td>
-                                <td data-label="Odgodi rezervaciju"><button className="delete-button">Odgodi</button></td>
-                            </tr>
+                            {myReservations.map((reservation) => { 
+                                return (
+                                    <>
+                                        {(formatDate(new Date()) === reservation.reservation_date && reservation.status === 'Odobreno') &&
+                                            <tr>
+                                                <td data-label="Username">{reservation.reserved_by_username}</td>
+                                                <td data-label="Parking">{reservation.reservation_parking_name}</td>
+                                                <td data-label="Adresa parkinga">{reservation.reservation_parking_address}</td>
+                                                <td data-label="Registracijske oznake">{reservation.registration_plates}</td>
+                                                <td data-label="Početak rezervacije">{reservation.begin_reservation}</td>
+                                                <td data-label="Kraj rezervacije">{reservation.end_reservation}</td>
+                                                <td data-label="Status rezervacije">{reservation.status}</td>
+                                                <td data-label="Kod rezervacije">{reservation.code}</td>
+                                                <td data-label="Odgodi rezervaciju"><button className="delete-button" onClick={() => {delayReservation(reservation.id)}}>Odgodi</button></td>
+                                            </tr>
+                                        }
+                                    </>
+                                )
+        	                })}
                         </>
                     )}
 
                     {button2 && (
                         <>
-                            <tr>
-                                <td data-label="Username">Mujke</td>
-                                <td data-label="Parking">Alta parking</td>
-                                <td data-label="Adresa parkinga">Franca Lehara 2</td>
-                                <td data-label="Registracijske oznake">A12-A-123</td>
-                                <td data-label="Početak rezervacije">12:00</td>
-                                <td data-label="Kraj rezervacije">14:00</td>
-                                <td data-label="Status rezervacije">Odobreno</td>
-                                <td data-label="Obriši"><button className="delete-button">Obriši</button></td>
-                            </tr>
-                            <tr>
-                                <td data-label="Username">Mujke</td>
-                                <td data-label="Parking">Trg Austrije</td>
-                                <td data-label="Adresa parkinga">Neka ulica 23</td>
-                                <td data-label="Registracijske oznake">A12-A-123</td>
-                                <td data-label="Početak rezervacije">16:00</td>
-                                <td data-label="Kraj rezervacije">18:00</td>
-                                <td data-label="Status rezervacije">Odbijeno</td>
-                                <td data-label="Obriši"><button className="delete-button">Obriši</button></td>
-                            </tr>
-                            <tr>
-                                <td data-label="Username">Mujke</td>
-                                <td data-label="Parking">Alta parking</td>
-                                <td data-label="Adresa parkinga">Franca Lehara 2</td>
-                                <td data-label="Registracijske oznake">A12-A-123</td>
-                                <td data-label="Početak rezervacije">12:00</td>
-                                <td data-label="Kraj rezervacije">14:00</td>
-                                <td data-label="Status rezervacije">Odobreno</td>
-                                <td data-label="Obriši"><button className="delete-button">Obriši</button></td>
-                            </tr>
-                            <tr>
-                                <td data-label="Username">Mujke</td>
-                                <td data-label="Parking">Trg Austrije</td>
-                                <td data-label="Adresa parkinga">Neka ulica 23</td>
-                                <td data-label="Registracijske oznake">A12-A-123</td>
-                                <td data-label="Početak rezervacije">16:00</td>
-                                <td data-label="Kraj rezervacije">18:00</td>
-                                <td data-label="Status rezervacije">Odbijeno</td>
-                                <td data-label="Obriši"><button className="delete-button">Obriši</button></td>
-                            </tr>
+                            {myReservations.map((reservation) => { 
+                                return (
+                                    <tr>
+                                        <td data-label="Username">{reservation.reserved_by_username}</td>
+                                        <td data-label="Parking">{reservation.reservation_parking_name}</td>
+                                        <td data-label="Adresa parkinga">{reservation.reservation_parking_address}</td>
+                                        <td data-label="Registracijske oznake">{reservation.registration_plates}</td>
+                                        <td data-label="Početak rezervacije">{reservation.begin_reservation}</td>
+                                        <td data-label="Kraj rezervacije">{reservation.end_reservation}</td>
+                                        <td data-label="Status rezervacije">{reservation.status}</td>
+                                        <td data-label="Kod rezervacije">{reservation.code}</td>
+                                        <td data-label="Datum rezervacije">{reservation.reservation_date}</td>
+                                    </tr>
+                                )
+        	                })}
                         </>
                     )}
                     
                     {button3 && (
                         <>
-                            <tr>
-                                <td data-label="Username">Mujke</td>
-                                <td data-label="Parking">Alta parking</td>
-                                <td data-label="Adresa parkinga">Franca Lehara 2</td>
-                                <td data-label="Registracijske oznake">A12-A-123</td>
-                                <td data-label="Početak rezervacije">12:00</td>
-                                <td data-label="Kraj rezervacije">14:00</td>
-                                <td data-label="Status rezervacije">Odobreno</td>
-                                <td data-label="Obriši"><button className="delete-button">Obriši</button></td>
-                            </tr>
-                            <tr>
-                                <td data-label="Username">Mujke</td>
-                                <td data-label="Parking">Trg Austrije</td>
-                                <td data-label="Adresa parkinga">Neka ulica 23</td>
-                                <td data-label="Registracijske oznake">A12-A-123</td>
-                                <td data-label="Početak rezervacije">16:00</td>
-                                <td data-label="Kraj rezervacije">18:00</td>
-                                <td data-label="Status rezervacije">Odobreno</td>
-                                <td data-label="Obriši"><button className="delete-button">Obriši</button></td>
-                            </tr>
-                        </>
+                        {myRefusedReservations.map((refusedReservation) => { 
+                            return (
+                                <>
+                                    {refusedReservation.status === 'Odgodjeno' &&
+                                        <tr>
+                                            <td data-label="Username">{refusedReservation.reserved_by_username}</td>
+                                            <td data-label="Parking">{refusedReservation.reservation_parking_name}</td>
+                                            <td data-label="Adresa parkinga">{refusedReservation.reservation_parking_address}</td>
+                                            <td data-label="Registracijske oznake">{refusedReservation.registration_plates}</td>
+                                            <td data-label="Početak rezervacije">{refusedReservation.begin_reservation}</td>
+                                            <td data-label="Kraj rezervacije">{refusedReservation.end_reservation}</td>
+                                            <td data-label="Status rezervacije">{refusedReservation.status}</td>
+                                            <td data-label="Kod rezervacije">{refusedReservation.code}</td>
+                                            <td data-label="Datum rezervacije">{refusedReservation.reservation_date}</td>
+                                        </tr>
+                                    }
+                                </>
+                            )
+                        })}
+                    </>
                     )}
                 </div>
             </div>
