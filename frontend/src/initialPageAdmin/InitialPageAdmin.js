@@ -7,13 +7,11 @@ import axios from "axios";
 
 function InitialPageAdmin() {
     
-    const [numberOfParking, setNumberOfSpots] = useState(1);
-
     const [myParkingList, setMyParkingList] = useState([]);
 
     useEffect(() => {
         getMyParkingList();
-    })
+    }, [myParkingList]);
 
     function getMyParkingList() {
         axios({
@@ -26,6 +24,20 @@ function InitialPageAdmin() {
         }).then(res => {
             setMyParkingList(res.data.myParkings);
         }).catch(err => console.log(err))
+    }
+
+    function deleteMyParking(id) {
+        axios({
+            method: "delete",
+            url: `http://localhost:5000/delete/parking/${id}`,
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: JSON.parse(localStorage.getItem("user"))
+            }
+        }).catch(error => {
+            console.log(error)
+        })
     }
     
     return (
@@ -56,8 +68,8 @@ function InitialPageAdmin() {
                                 <p>{myParking.parking_address}</p>
                                 <div className="buttons">
                                     <Link to={`/parking/details/:?id=${myParking.id}`} className="info-btn">Vidi objavu</Link>
-                                    <Link to="/edit/post" className="edit-btn">Uredi objavu</Link>
-                                    <button className="delete-btn">Izbriši objavu</button>
+                                    <Link to={`/edit/post/:?id=${myParking.id}`} className="edit-btn">Uredi objavu</Link>
+                                    <button className="delete-btn" onClick={() => deleteMyParking(myParking.id)}>Izbriši objavu</button>
                                 </div>
                             </footer>
                         </article>

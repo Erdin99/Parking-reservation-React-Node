@@ -1,6 +1,7 @@
 import ParkingReservationService from '../service/parkingReservation'
 import ParkingReservationDAO from '../db/dao/parkingReservation'
 import sendEmail from '../controller/sendEmail'
+import sendRefusedEmail from './sendRefusedEmail'
 
 const createParkingReservation = async (id, parkingReservationDto, req, res) => {
     try {
@@ -55,6 +56,56 @@ const refuseReservation = async (id, req, res) => {
     }
 }
 
+const refuseUsersReservation = async (id, req, res) => {
+    try {
+        const data = await ParkingReservationDAO.getUserData(id)
+        const parkingId = data.reservation_parking_id
+        const parkingStatus = data.status
+        const email = data.reserved_by_email
+        const parkingName = data.reservation_parking_name
+        if(parkingStatus === 'Odgodjeno') {
+            return res.status(403).send("Cannot refuse, becuase it's already refused!")
+        }
+        const numberOfFreeSpots = await ParkingReservationDAO.getNumberOfSpots(parkingId)
+
+        const status = 'Odgodjeno'
+
+        await ParkingReservationDAO.refuseUsersReservation(status, id)
+
+        await ParkingReservationDAO.updateParkingSpots(parkingId, (numberOfFreeSpots.number_of_parking_spots + 1))
+
+        sendRefusedEmail(email, parkingName)
+
+        res.send('Successful refused!')
+    } catch(err) {
+        console.log(err)
+        res.status(400).send()
+    }
+}
+
+const finishReservation = async (id, req, res) => {
+    try {
+        const data = await ParkingReservationDAO.getParkingIdAndStatus(id)
+        const parkingId = data.reservation_parking_id
+        const parkingStatus = data.status
+        if(parkingStatus === 'Zavrseno') {
+            return res.status(403).send("Cannot finish, because it's already finished!")
+        }
+        const numberOfFreeSpots = await ParkingReservationDAO.getNumberOfSpots(parkingId)
+        
+        const status = 'Zavrseno'
+        
+        await ParkingReservationDAO.refuseReservation(status, id)
+        
+        await ParkingReservationDAO.updateParkingSpots(parkingId, (numberOfFreeSpots.number_of_parking_spots + 1))
+        
+        res.send('Successful finished!')
+    } catch(err) {
+        console.log(err)
+        res.status(400).send()
+    }
+}
+
 const getAllReservationForMyParking = async (parkingReservationDto, req, res) => {
     try {
         const listOfReservationForMyParking = await ParkingReservationService.getAllReservationForMyParking(parkingReservationDto)
@@ -95,11 +146,24 @@ const getMyRefusedReservations = async (parkingReservationDto, req, res) => {
     }
 }
 
+const getSearchedReservation = async (code, req, res) => {
+    try {
+        const searchedReservation = await ParkingReservationService.getSearchedReservation(code)
+        res.send({searchedReservation})
+    } catch(err) {
+        console.log(err)
+        res.status(400).send()
+    }
+}
+
 export default {
     createParkingReservation,
     refuseReservation,
+    refuseUsersReservation,
+    finishReservation,
     getAllReservationForMyParking,
     getAllRefusedReservationForMyParking,
     getMyReservations,
-    getMyRefusedReservations
+    getMyRefusedReservations,
+    getSearchedReservation
 }

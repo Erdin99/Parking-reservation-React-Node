@@ -9,6 +9,14 @@ const refuseReservation = async (status, id) => {
     return ParkingReservationDAO.refuseReservation(status, id)
 }
 
+const refuseUsersReservation = async (status, id) => {
+    return ParkingReservationDAO.refuseUsersReservation(status, id)
+}
+
+const finishReservation = async (status, id) => {
+    return ParkingReservationDAO.refuseReservation(status, id)
+}
+
 const getAllReservationForMyParking = async (parkingReservationDto) => {
     const id = parkingReservationDto.id
     return ParkingReservationDAO.getAllReservationForMyParking(id)
@@ -29,11 +37,18 @@ const getMyRefusedReservations = async (parkingReservationDto) => {
     return ParkingReservationDAO.getMyRefusedReservations(id)
 }
 
+const getSearchedReservation = async (code) => {
+    return ParkingReservationDAO.getSearchedReservation(code)
+}
+
 export default {
     createParkingReservation,
     refuseReservation,
+    refuseUsersReservation,
+    finishReservation,
     getAllReservationForMyParking,
     getAllRefusedReservationForMyParking,
     getMyReservations,
-    getMyRefusedReservations
+    getMyRefusedReservations,
+    getSearchedReservation
 }

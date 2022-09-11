@@ -36,12 +36,21 @@ const getParkingIdAndStatus = async (id) => {
     return parkingId.rows[0]
 }
 
+const getUserData = async (id) => {
+    const userData = await db.raw(`SELECT reserved_by_email, reservation_parking_name, reservation_parking_id, status FROM parking_reservation WHERE id = :id`, {id})
+    return userData.rows[0]
+}
+
 const getNumberOfSpots = async (id) => {
     const number = await db.raw(`SELECT number_of_parking_spots FROM parking_spots WHERE id = :id`, {id})
     return number.rows[0]
 }
 
 const refuseReservation = async (status, id) => {
+    await db.raw(`UPDATE parking_reservation SET status = :status WHERE id = :id`, {status, id})
+}
+
+const refuseUsersReservation = async (status, id) => {
     await db.raw(`UPDATE parking_reservation SET status = :status WHERE id = :id`, {status, id})
 }
 
@@ -52,7 +61,7 @@ const updateParkingSpots = async (id, number_of_parking_spots) => {
 
 const getAllReservationForMyParking = async (id) => {
     const allReservations = await db.raw(`SELECT * FROM parking_reservation 
-    WHERE reservation_created_by_id = :id AND status ='Odobreno'`, 
+    WHERE reservation_created_by_id = :id ORDER BY begin_reservation`, 
     {id})
     return allReservations.rows
 }
@@ -76,6 +85,11 @@ const getMyRefusedReservations = async (id) => {
     return allMyRefusedReservations.rows
 }
 
+const getSearchedReservation = async (code) => {
+    const searchedReservation = await db.raw(`SELECT * FROM parking_reservation WHERE code = :code`, {code})
+    return searchedReservation.rows
+}
+
 export default {
     getData,
     getFreeSpots,
@@ -83,11 +97,14 @@ export default {
     createParkingReservation,
     updateNumberOfParkingSpots,
     refuseReservation,
+    refuseUsersReservation,
     updateParkingSpots,
     getParkingIdAndStatus,
+    getUserData,
     getNumberOfSpots,
     getAllReservationForMyParking,
     getAllRefusedReservationForMyParking,
     getMyReservations,
-    getMyRefusedReservations
+    getMyRefusedReservations,
+    getSearchedReservation
 }

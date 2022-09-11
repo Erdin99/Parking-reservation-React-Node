@@ -17,6 +17,7 @@
 .search-user-form {
     padding: 15px;
     width: 40%;
+    margin-top: 15px;
     margin-left: auto;
     margin-right: auto;
     border: 1px solid black;
@@ -30,4 +31,122 @@
 .search-by-code {
     padding: 5px;
     border-radius: 5px;
+}
+
+.search-button {
+    background-image: -webkit-linear-gradient(top, #57ff03, #0dc700);
+    background-image: -o-linear-gradient(top, #57ff03, #0dc700);
+    background-image: linear-gradient(to bottom, #57ff03, #0dc700);
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    font-size: 16px;
+    padding: 5px 25px;
+    margin-top: 10px;
+    margin-left: 15px;
+}
+
+.search-result {
+    width: 90%;
+    height: 30%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+}
+
+.searched-modal-close {
+    color: #5e5c5c;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+  
+.searched-modal-close:hover, .searched-modal-close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+.table-list tr:nth-child(odd) {
+    background-color:#ddd;
+  }
+  
+  .table-list tr:nth-child(even) {
+    background-color:#fff;
+}
+  
+@media screen and (min-width:600px) {    
+    .table-list {
+      display: table;
+      width: 80%;
+    }
+   
+    .table-list tr {
+      display: table-row;
+    }
+    
+    .table-list tr:first-child th {
+      background-color:#444;
+      color:#fff;
+      padding: .6em 2em;
+      border: 1px solid black;
+    }
+    
+    .table-list tr > td {
+      display: table-cell;
+      padding: .6em 1em;
+      border: 1px solid black;
+      text-align: center;
+    }
+    
+}
+  
+@media screen and (max-width:599px) {    
+    .table-list tr {
+      border: solid 1px #ccc;
+      display: block;
+      list-style: none;
+      padding: .5em 1em;
+    }
+    
+    .table-list tr:first-child {
+      display: none;
+    }
+    
+    .table-list tr > td {
+      display: block;
+      padding: .25em 0;
+    }
+    
+    .table-list tr:nth-child(odd) > td + td {
+      border-top: solid 1px #ccc;
+    }
+    
+    .table-list tr:nth-child(even) > td + td {
+      border-top: solid 1px #eee;
+    }
+    
+    .table-list tr > td:before {
+      color:#000;
+      content: attr(data-label);
+      display: inline-block;
+      font-size: 75%;
+      font-weight: bold;
+      text-transform: capitalize;
+      vertical-align: top;
+      width: 50%;
+    }    
+}
+  
+@media screen and (max-width:349px) {
+      
+    .table-list ul > td:before {
+      display: block;
+    }
+    
+    .table-list p {
+      margin: 0;
+    }
+    
 }
