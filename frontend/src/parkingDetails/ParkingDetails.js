@@ -8,6 +8,7 @@ import alta3 from "../images/alta3.png";
 import alta4 from "../images/alta4.jpg";
 import { Link } from "react-router-dom";
 import axios from 'axios';
+import moment from "moment";
 
 function ParkingDetails() {
 
@@ -138,22 +139,24 @@ function ParkingDetails() {
 
                 <div>
                     <h1 className="comment-section-title">Sekcija komentara za ovaj parking prostor!</h1>
-                    
+                    {myParkingComments.length === 0 && <h1 className="comment-info">Trenutno nema komentara za ovaj parking prostor</h1>}
                     <div>
                         {
                             runCallback(() => {
                                 const comments = [];
-                                for (var i = 0; i < 12; i++) {
+                                var i = 0;
+                                {myParkingComments.map((myCom) => {
                                     if(i < counter) {
                                         comments.push(
                                             <div className="comment-box-inner">
-                                                <h3>Username korisnika</h3>
-                                                <p>Ovdje se pise nekakav komentar  dhf dhf dhf hdf hdfhdfh hdfjsf hjsdfh sdjsdjfhsdjf</p>
-                                                <h6 className="comment-date"> April 18, 2013, 12:01 </h6>  
+                                                <h3>{myCom.created_comment_by_username}</h3>
+                                                <p>{myCom.comment} <br/> <br/> Ocjena: {myCom.grade}</p>
+                                                <h6 className="comment-date"> {moment(myCom.created_at).add(2, 'hours').utc().format('YYYY-MM-DD, h:mm:ss a')} </h6>  
                                             </div>
                                         );
                                     }
-                                }
+                                    i++;
+                                })}
                                 return comments;
                             })
                         }
