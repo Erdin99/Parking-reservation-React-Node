@@ -15,6 +15,7 @@ import ParkingDetails from "./parkingDetails/ParkingDetails";
 import AdminReservationList from "./adminReservationList/AdminReservationList";
 import EditPost from "./editPost/EditPost";
 import SpecificParkingDetails from "./specificParkingDetails/SpecificParkingDetails";
+import SeachedResult from "./searchedResult/SearchedResult";
 
 
 
@@ -34,7 +35,8 @@ function App() {
           <Route path="/about/me" exact element={<AboutMe />}></Route>
           <Route path="/parking/details/:id" exact element={<ParkingDetails />}></Route>
           <Route path="/reservations/:id" exact element={<AdminReservationList />}></Route>
-          <Route path="/edit/post" exact element={<EditPost />}></Route>
+          <Route path="/searched/result/:code" exact element={<SeachedResult />}></Route>
+          <Route path="/edit/post/:id" exact element={<EditPost />}></Route>
           <Route path="/parking/spot/:id" exact element={<SpecificParkingDetails/>}></Route>
         </Routes>
       </BrowserRouter>

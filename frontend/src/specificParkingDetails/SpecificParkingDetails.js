@@ -114,13 +114,18 @@ function SpecificParkingDetails() {
         return cb();
     }
 
-    async function getParkingDetails() {
-        const response = await axios.get(`http://localhost:5000/parking/details/${parkingId}`).then(res => {
-            setParkingDetails(res.data.parkingDetail[0]);
+    function getParkingDetails() {    
+        axios({
+            method: "get",
+            url: `http://localhost:5000/parking/details/${parkingId}`,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: JSON.parse(localStorage.getItem("user"))
+            }
+        }).then(res => {
+            setParkingDetails(res.data.parkingDetail[0])
             setParkingComments(res.data.parkingComments);
-        }).catch(err => console.log(err));
-
-        return response;
+        }).catch(err => console.log(err))
     }
 
     function openReservationAlertMessage() {

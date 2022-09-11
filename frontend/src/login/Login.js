@@ -62,6 +62,7 @@ function Login() {
             }).then(res => {
                 localStorage.setItem('user', JSON.stringify(res.data.user.token));
                 localStorage.setItem('userMail', JSON.stringify(email));
+                localStorage.setItem('userRole', JSON.stringify(res.data.user.role.role_id))
                 //console.log("res token -> ", res.data.user.token);
                 if(res.data.user.role.role_id === 1) {
                     navigate("/users/admin");

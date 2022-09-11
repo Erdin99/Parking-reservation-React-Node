@@ -9,7 +9,7 @@ import {useNavigate} from "react-router-dom";
 
 function Navigation() {
     const adminRole = 1;
-    const [role, setRole] = useState(1);
+    const role = JSON.parse(localStorage.getItem("userRole"));
 
     const navigate = useNavigate();
 
@@ -34,7 +34,7 @@ function Navigation() {
                 modal.style.display = "none";
             }
         }
-    })
+    }, [])
 
     function handleLogout() {
         localStorage.removeItem('user');

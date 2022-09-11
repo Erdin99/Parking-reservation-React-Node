@@ -43,9 +43,7 @@ function ParkingDetails() {
 
         window.addEventListener('resize', slideImage);
 
-        // u ovom slucaju je 11, taj broj ovisi o tome koliko komentara se nalazi za odredjeni parking prostor, te kad izvucemo sve elemente, duzinu liste koristimo u tom slucaju umjesto
-        // broja 11
-        if(counter > 11) {
+        if(counter > myParkingComments) {
             setRemoveLink(true);
         }
     }, [counter]);

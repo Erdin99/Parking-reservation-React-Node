@@ -1,12 +1,67 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import Navigation from "../navigation/Navigation";
 import "./adminReservationList.css";
+import axios from "axios";
+import {useNavigate} from 'react-router-dom'
 
 function AdminReservationList() {
-
+    
     const [button1, setButton1] = useState(true);
     const [button2, setButton2] = useState(false);
     const [button3, setButton3] = useState(false);
+
+    const [reservations, setReservations] = useState([]);
+    const [delayedReservations, setDelayedReservations] = useState([]);
+
+    const [code, setCode] = useState("");
+    const navigate = useNavigate();
+    
+    useEffect(() => {
+        getReservations();
+        getDelayedReservations();
+    }, [reservations]);
+
+    function getReservations() {
+        axios({
+            method: "get",
+            url: `http://localhost:5000/reservations`,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: JSON.parse(localStorage.getItem("user"))
+            }
+        }).then(res => {
+            setReservations(res.data.listOfReservationForMyParking);
+        }).catch(err => console.log(err))
+    }
+
+    function getDelayedReservations() {
+        axios({
+            method: "get",
+            url: `http://localhost:5000/refused/reservations`,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: JSON.parse(localStorage.getItem("user"))
+            }
+        }).then(res => {
+            setDelayedReservations(res.data.listOfRefusedReservationForMyParking);
+        }).catch(err => console.log(err))
+    }
+
+    function seeSearchResult() {
+        navigate(`/searched/result/:?code=${code}`)
+    }
+
+    function padTo2Digits(num) {
+        return num.toString().padStart(2, '0');
+    }
+
+    function formatDate(date) {
+        return [
+          date.getFullYear(),
+          padTo2Digits(date.getMonth() + 1),
+          padTo2Digits(date.getDate()),
+        ].join('-');
+    }
 
     function showTodaysReservations() {
         setButton1(true);
@@ -26,7 +81,16 @@ function AdminReservationList() {
         setButton3(true);
     }
 
- 
+    function delayUserReservation(id) {
+        axios({
+            method: "patch",
+            url: `http://localhost:5000/refuse/users/reservation/${id}`,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: JSON.parse(localStorage.getItem("user"))
+            }
+        }).catch(err => console.log(err))
+    }
 
     return(
         <>
@@ -34,7 +98,7 @@ function AdminReservationList() {
                 <Navigation />
             </div>
             <div className="content-admin">
-            {button1 && <h1 className="reservation-list-title">Rezervisana mjesta za: 3.9.2022.</h1>}
+            {button1 && <h1 className="reservation-list-title">Rezervisana mjesta za: {formatDate(new Date())}</h1>}
                 
                 <div className="three-button-row">
                     <button className="button-list-option" onClick={(e) => showTodaysReservations()} style={{backgroundColor: button1 === true?"#26272b":"white", color: button1 === false?"black":"white"}}>Današnje rezervacije</button>
@@ -43,13 +107,14 @@ function AdminReservationList() {
                 </div>
                 {button1 && 
                     <div className="free-spots-info">
-                        <h3>Preostali broj slobodnih mjesta je: <span>140</span></h3>
-                        <form className="search-user-form">
+                        <form className="search-user-form" onSubmit={seeSearchResult}>
                             <label className="search-user">Pretraži korisnika po kodu: </label>
-                            <input type="text" className="search-by-code"></input>
+                            <input type="text" className="search-by-code" value={code} onChange={(e) => setCode(e.target.value)} required></input>
+                            <button type="submit" className="search-button">Pretraži</button>
                         </form>
                     </div>
                 }
+                
                 <div className="list">
                     <tr>
                         <th>Username</th>
@@ -61,104 +126,69 @@ function AdminReservationList() {
                         <th>Kraj rezervacije</th>
                         <th>Kod</th>
                         {button1 && <th>Odgodi rezervaciju</th>}
-                        {button1 && <th>Završena rezervacija</th>}
+                        {!button1 && <th>Datum rezervacije</th>}
                     </tr>
                     {button1 && (
                         <>
-                            <tr>
-                                <td data-label="Username">Mujke</td>
-                                <td data-label="Email">mujo.mujic12@gmail.com</td>
-                                <td data-label="Parking">Alta parking</td>
-                                <td data-label="Adresa parkinga">Franca Lehara 2</td>
-                                <td data-label="Registracijske oznake">A12-A-123</td>
-                                <td data-label="Početak rezervacije">12:00</td>
-                                <td data-label="Kraj rezervacije">14:00</td>
-                                <td data-label="Kod">dsf3449sdf</td>
-                                {button1 && <td data-label="Odgodi"><button className="delete-button">Odgodi</button></td>}
-                                {button1 && <td data-label="Završeno"><button className="delete-button">Završeno</button></td>}
-                            </tr>
-                            <tr>
-                                <td data-label="Username">Mujke</td>
-                                <td data-label="Email">mujo.mujic12@gmail.com</td>
-                                <td data-label="Parking">Alta parking</td>
-                                <td data-label="Adresa parkinga">Franca Lehara 2</td>
-                                <td data-label="Registracijske oznake">A12-A-123</td>
-                                <td data-label="Početak rezervacije">12:00</td>
-                                <td data-label="Kraj rezervacije">14:00</td>
-                                <td data-label="Kod">dsf3449sdf</td>
-                                {button1 && <td data-label><button className="delete-button">Odgodi</button></td>}
-                                {button1 && <td data-label><button className="delete-button">Završeno</button></td>}
-                            </tr>
+                            {reservations.map((reser) => {
+                                return (
+                                    <>
+                                        {(formatDate(new Date()) === reser.reservation_date && reser.status === 'Odobreno') &&
+                                            <tr>
+                                                <td data-label="Username">{reser.reserved_by_username}</td>
+                                                <td data-label="Email">{reser.reserved_by_email}</td>
+                                                <td data-label="Parking">{reser.reservation_parking_name}</td>
+                                                <td data-label="Adresa parkinga">{reser.reservation_parking_address}</td>
+                                                <td data-label="Registracijske oznake">{reser.registration_plates}</td>
+                                                <td data-label="Početak rezervacije">{reser.begin_reservation}</td>
+                                                <td data-label="Kraj rezervacije">{reser.end_reservation}</td>
+                                                <td data-label="Kod">{reser.code}</td>
+                                                {button1 && <td data-label="Odgodi"><button className="delete-button" onClick={() => delayUserReservation(reser.id)}>Odgodi</button></td>}
+                                            </tr>
+                                        }
+                                    </>
+                                )
+                            })}
                         </>
                     )}
 
                     {button2 && (
                         <>
-                            <tr>
-                                <td data-label="Username">Mujke</td>
-                                <td data-label="Email">mujo.mujic12@gmail.com</td>
-                                <td data-label="Parking">Alta parking</td>
-                                <td data-label="Adresa parkinga">Franca Lehara 2</td>
-                                <td data-label="Registracijske oznake">A12-A-123</td>
-                                <td data-label="Početak rezervacije">12:00</td>
-                                <td data-label="Kraj rezervacije">14:00</td>
-                                <td data-label="Kod">dsf3449sdf</td>
-                            </tr>
-                            <tr>
-                                <td data-label="Username">Mujke</td>
-                                <td data-label="Email">mujo.mujic12@gmail.com</td>
-                                <td data-label="Parking">Alta parking</td>
-                                <td data-label="Adresa parkinga">Franca Lehara 2</td>
-                                <td data-label="Registracijske oznake">A12-A-123</td>
-                                <td data-label="Početak rezervacije">12:00</td>
-                                <td data-label="Kraj rezervacije">14:00</td>
-                                <td data-label="Kod">dsf3449sdf</td>
-                            </tr>
-                            <tr>
-                                <td data-label="Username">Mujke</td>
-                                <td data-label="Email">mujo.mujic12@gmail.com</td>
-                                <td data-label="Parking">Alta parking</td>
-                                <td data-label="Adresa parkinga">Franca Lehara 2</td>
-                                <td data-label="Registracijske oznake">A12-A-123</td>
-                                <td data-label="Početak rezervacije">12:00</td>
-                                <td data-label="Kraj rezervacije">14:00</td>
-                                <td data-label="Kod">dsf3449sdf</td>
-                            </tr>
-                            <tr>
-                                <td data-label="Username">Mujke</td>
-                                <td data-label="Email">mujo.mujic12@gmail.com</td>
-                                <td data-label="Parking">Alta parking</td>
-                                <td data-label="Adresa parkinga">Franca Lehara 2</td>
-                                <td data-label="Registracijske oznake">A12-A-123</td>
-                                <td data-label="Početak rezervacije">12:00</td>
-                                <td data-label="Kraj rezervacije">14:00</td>
-                                <td data-label="Kod">dsf3449sdf</td>
-                            </tr>
+                            {reservations.map((reser) => {
+                                return (
+                                    <tr>
+                                        <td data-label="Username">{reser.reserved_by_username}</td>
+                                        <td data-label="Email">{reser.reserved_by_email}</td>
+                                        <td data-label="Parking">{reser.reservation_parking_name}</td>
+                                        <td data-label="Adresa parkinga">{reser.reservation_parking_address}</td>
+                                        <td data-label="Registracijske oznake">{reser.registration_plates}</td>
+                                        <td data-label="Početak rezervacije">{reser.begin_reservation}</td>
+                                        <td data-label="Kraj rezervacije">{reser.end_reservation}</td>
+                                        <td data-label="Kod">{reser.code}</td>
+                                        <td data-label="Datum rezervacije">{reser.reservation_date}</td>
+                                    </tr>
+                                )
+                            })}
                         </>
                     )}
                     
                     {button3 && (
                         <>
-                            <tr>
-                                <td data-label="Username">Mujke</td>
-                                <td data-label="Email">mujo.mujic12@gmail.com</td>
-                                <td data-label="Parking">Alta parking</td>
-                                <td data-label="Adresa parkinga">Franca Lehara 2</td>
-                                <td data-label="Registracijske oznake">A12-A-123</td>
-                                <td data-label="Početak rezervacije">12:00</td>
-                                <td data-label="Kraj rezervacije">14:00</td>
-                                <td data-label="Kod">dsf3449sdf</td>
-                            </tr>
-                            <tr>
-                                <td data-label="Username">Mujke</td>
-                                <td data-label="Email">mujo.mujic12@gmail.com</td>
-                                <td data-label="Parking">Alta parking</td>
-                                <td data-label="Adresa parkinga">Franca Lehara 2</td>
-                                <td data-label="Registracijske oznake">A12-A-123</td>
-                                <td data-label="Početak rezervacije">12:00</td>
-                                <td data-label="Kraj rezervacije">14:00</td>
-                                <td data-label="Kod">dsf3449sdf</td>
-                            </tr>
+                            {delayedReservations.map((delres) => {
+                                return (
+                                    <tr>
+                                        <td data-label="Username">{delres.reserved_by_username}</td>
+                                        <td data-label="Email">{delres.reserved_by_email}</td>
+                                        <td data-label="Parking">{delres.reservation_parking_name}</td>
+                                        <td data-label="Adresa parkinga">{delres.reservation_parking_address}</td>
+                                        <td data-label="Registracijske oznake">{delres.registration_plates}</td>
+                                        <td data-label="Početak rezervacije">{delres.begin_reservation}</td>
+                                        <td data-label="Kraj rezervacije">{delres.end_reservation}</td>
+                                        <td data-label="Kod">{delres.code}</td>
+                                        <td data-label="Datum rezervacije">{delres.reservation_date}</td>
+                                    </tr>
+                                )
+                            })}
                         </>
                     )}
                 </div>
