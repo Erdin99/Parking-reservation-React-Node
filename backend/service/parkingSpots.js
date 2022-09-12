@@ -2,8 +2,8 @@ import ParkingSpotsDAO from '../db/dao/parkingSpots'
 import config from '../core/config'
 
 const createParkingSpot = (parkingDto, parkingDto1) => {
-    const { parking_name, parking_address, number_of_parking_spots, basic_informations, price } = parkingDto1;
-    return ParkingSpotsDAO.createParkingSpot(parkingDto.id, parkingDto.username, parkingDto.email, parking_name, parking_address, number_of_parking_spots, basic_informations, price);
+    const { parking_name, parking_address, number_of_parking_spots, basic_informations, price, parking_image } = parkingDto1;
+    return ParkingSpotsDAO.createParkingSpot(parkingDto.id, parkingDto.username, parkingDto.email, parking_name, parking_address, number_of_parking_spots, basic_informations, price, parking_image);
 }
 
 const readAllParkings = (filter) => {
@@ -33,8 +33,8 @@ const readParkingDetails = (id) => {
 }
 
 const updateParking = (id, parkingDto) => {
-    const {parking_name, parking_address, number_of_parking_spots, basic_informations } = parkingDto
-    return ParkingSpotsDAO.updateParking(id, parking_name, parking_address, number_of_parking_spots, basic_informations)
+    const {parking_name, parking_address, number_of_parking_spots, basic_informations, price } = parkingDto
+    return ParkingSpotsDAO.updateParking(id, parking_name, parking_address, number_of_parking_spots, basic_informations, price)
 }
 
 const deleteParking = (id) => {

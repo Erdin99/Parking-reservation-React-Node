@@ -2,15 +2,22 @@ import React, {useEffect, useState} from "react";
 import "./initialPageAdmin.css";
 import parking from "../images/parking.jpg"
 import Navigation from "../navigation/Navigation";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function InitialPageAdmin() {
     
     const [myParkingList, setMyParkingList] = useState([]);
 
+    const navigate = useNavigate();
+
     useEffect(() => {
-        getMyParkingList();
+        if(localStorage.getItem("user") === null) {
+            navigate('/login');
+        }
+        else {
+            getMyParkingList();
+        }
     }, [myParkingList]);
 
     function getMyParkingList() {

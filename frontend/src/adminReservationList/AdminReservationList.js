@@ -17,8 +17,13 @@ function AdminReservationList() {
     const navigate = useNavigate();
     
     useEffect(() => {
-        getReservations();
-        getDelayedReservations();
+        if(localStorage.getItem("user") === null) {
+            navigate('/login');
+        }
+        else {
+            getReservations();
+            getDelayedReservations();
+        }
     }, [reservations]);
 
     function getReservations() {

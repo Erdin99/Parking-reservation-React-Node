@@ -3,7 +3,7 @@ import "./editPost.css";
 import Navigation from "../navigation/Navigation";
 import axios from "axios";
 import $ from 'jquery';
-import {useNavigate} from "react-router-dom";
+import {useNavigate, Link} from "react-router-dom";
 
 function EditPost() {
 
@@ -20,7 +20,12 @@ function EditPost() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        getMyParkingDetails();
+        if(localStorage.getItem("user") === null) {
+            navigate('/login');
+        }
+        else {
+            getMyParkingDetails();
+        }
     }, [showAlert])
 
     function getMyParkingDetails() {
@@ -94,6 +99,7 @@ function EditPost() {
             </div>
 
             <div className="content-admin">
+                <div className="back-button-space"><Link to="/users/admin" className="back-button">&lt;&nbsp; Vrati me nazad</Link></div>
                 <div className="update_notification"><span id="update_notification_type" className=""></span></div>
                 <div className="info_notification"><span id="info_notification_type" className=""></span></div>
                 <div className="container-post-parking-form">

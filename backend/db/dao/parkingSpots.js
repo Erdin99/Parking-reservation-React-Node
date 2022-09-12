@@ -1,12 +1,11 @@
 import db from '..'
 
-const createParkingSpot = async (created_by_id, created_by_username, created_by_email, parking_name, parking_address, number_of_parking_spots, basic_informations, price) => {
+const createParkingSpot = async (created_by_id, created_by_username, created_by_email, parking_name, parking_address, number_of_parking_spots, basic_informations, price, parking_image) => {
     const createdParking = await db.raw(`INSERT INTO parking_spots (created_by_id, created_by_username, created_by_email, parking_name, 
-    parking_address, number_of_parking_spots, basic_informations, price) 
+    parking_address, number_of_parking_spots, basic_informations, price, parking_image) 
     VALUES 
-    (:created_by_id, :created_by_username, :created_by_email, :parking_name, :parking_address, :number_of_parking_spots, 
-    :basic_informations, :price)`, 
-    {created_by_id, created_by_username, created_by_email, parking_name, parking_address, number_of_parking_spots, basic_informations, price})
+    (:created_by_id, :created_by_username, :created_by_email, :parking_name, :parking_address, :number_of_parking_spots, :basic_informations, :price, :parking_image)`, 
+    {created_by_id, created_by_username, created_by_email, parking_name, parking_address, number_of_parking_spots, basic_informations, price, parking_image})
     return createdParking.rows[0]
 }
 
@@ -52,11 +51,11 @@ const findValidUserById = async (created_by_id, id) => {
     return validUser.rows[0]
 }
 
-const updateParking = async (id, parking_name, parking_address, number_of_parking_spots, basic_informations) => {
+const updateParking = async (id, parking_name, parking_address, number_of_parking_spots, basic_informations, price) => {
     await db.raw(`UPDATE parking_spots SET parking_name = :parking_name, parking_address = :parking_address, 
-    number_of_parking_spots = :number_of_parking_spots, basic_informations = :basic_informations 
+    number_of_parking_spots = :number_of_parking_spots, basic_informations = :basic_informations, price = :price 
     WHERE id = :id`, 
-    {parking_name, parking_address, number_of_parking_spots, basic_informations, id})
+    {parking_name, parking_address, number_of_parking_spots, basic_informations, price, id})
 }
 
 const deleteParking = async (id) => {

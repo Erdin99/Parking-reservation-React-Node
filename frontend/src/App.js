@@ -18,8 +18,8 @@ import SpecificParkingDetails from "./specificParkingDetails/SpecificParkingDeta
 import SeachedResult from "./searchedResult/SearchedResult";
 
 
-
 function App() {
+
   return (
     <div>
       <BrowserRouter>

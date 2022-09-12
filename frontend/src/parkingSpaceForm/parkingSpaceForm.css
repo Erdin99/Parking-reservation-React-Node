@@ -125,3 +125,33 @@
 	}
 }
 
+.create_parking_notification {
+    position: fixed;
+    top: 12%;
+    width: 100%;
+    height: 0;
+    box-sizing: border-box;
+    color: white;
+    text-align: center;
+    background: #03bf6d;
+    overflow: hidden;
+    box-sizing: border-box;
+    -webkit-transition: all ease 0.4s;
+    -moz-transition: all ease 0.4s;
+    -ms-transition: all ease 0.4s;
+    -o-transition: all ease 0.4s;
+    transition: all ease 0.4s;
+}
+  
+#create_parking_notification_type:before {
+    display: block;
+    margin-top: 15px;
+}
+  
+.create_parking_notification.active {
+    height: 50px;
+}
+  
+.success_create_parking:before {
+    content: "Uspješno ste kreirali Vaš parking prostor!";
+}

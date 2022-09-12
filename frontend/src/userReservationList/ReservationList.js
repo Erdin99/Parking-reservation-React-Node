@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navigation from "../navigation/Navigation";
 import "./reservationList.css";
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 function ReservationList() {
     
@@ -9,13 +10,20 @@ function ReservationList() {
     const [button2, setButton2] = useState(false);
     const [button3, setButton3] = useState(false);
 
-    const [myReservations, setMyReservations] = useState([])
-    const [myRefusedReservations, setMyRefusedReservations] = useState([])
+    const [myReservations, setMyReservations] = useState([]);
+    const [myRefusedReservations, setMyRefusedReservations] = useState([]);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
-        getMyReservations();
-        getRefusedReservations();
-    }, [myReservations, myRefusedReservations]);
+        if(localStorage.getItem("user") === null) {
+            navigate('/login');
+        }
+        else {
+            getMyReservations();
+            getRefusedReservations();
+        }
+    }, [myReservations]);
 
     function getMyReservations() {
         
@@ -30,6 +38,7 @@ function ReservationList() {
             setMyReservations(res.data.listOfMyReservations);
         }).catch(err => console.log(err))
     }
+
 
     function getRefusedReservations() {
         axios({
@@ -113,7 +122,7 @@ function ReservationList() {
                         {button1 ? <th>Odgodi rezervaciju</th> : <th>Datum rezervacije</th>}
                     </tr>
                     {button1 && (
-                        <>
+                        <>  
                             {myReservations.map((reservation) => { 
                                 return (
                                     <>

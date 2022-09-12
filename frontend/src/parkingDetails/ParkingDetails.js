@@ -6,7 +6,7 @@ import alta1 from "../images/alta1.jpg";
 import alta2 from "../images/alta2.jpg";
 import alta3 from "../images/alta3.png";
 import alta4 from "../images/alta4.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import moment from "moment";
 
@@ -19,32 +19,39 @@ function ParkingDetails() {
     const [counter, setCounter] = useState(5);
     const [removeLink, setRemoveLink] = useState(false); //ovo removeLink je za otvori jos komentara, u slucaju da nema vise komentara za prikaz, uklanja se link
 
+    const navigate = useNavigate();
+
     useEffect(() => {
-        getMyParkingDetails();
-
-        //blok koda koji omogucava prelaz sa slike na sliku
-        const imgs = document.querySelectorAll('.img-select a');
-        const imgBtns = [...imgs];
-        let imgId = 1;
-
-        imgBtns.forEach((imgItem) => {
-            imgItem.addEventListener('click', (event) => {
-                event.preventDefault();
-                imgId = imgItem.dataset.id;
-                slideImage();
-            });
-        });
-
-        function slideImage(){
-            const displayWidth = document.querySelector('.img-showcase img:first-child').clientWidth;
-
-            document.querySelector('.img-showcase').style.transform = `translateX(${- (imgId - 1) * displayWidth}px)`;
+        if(localStorage.getItem("user") === null) {
+            navigate('/login');
         }
+        else {
+            getMyParkingDetails();
 
-        window.addEventListener('resize', slideImage);
+            //blok koda koji omogucava prelaz sa slike na sliku
+            const imgs = document.querySelectorAll('.img-select a');
+            const imgBtns = [...imgs];
+            let imgId = 1;
 
-        if(counter > myParkingComments) {
-            setRemoveLink(true);
+            imgBtns.forEach((imgItem) => {
+                imgItem.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    imgId = imgItem.dataset.id;
+                    slideImage();
+                });
+            });
+
+            function slideImage(){
+                const displayWidth = document.querySelector('.img-showcase img:first-child').clientWidth;
+
+                document.querySelector('.img-showcase').style.transform = `translateX(${- (imgId - 1) * displayWidth}px)`;
+            }
+
+            window.addEventListener('resize', slideImage);
+
+            if(counter > myParkingComments) {
+                setRemoveLink(true);
+            }
         }
     }, [counter]);
 

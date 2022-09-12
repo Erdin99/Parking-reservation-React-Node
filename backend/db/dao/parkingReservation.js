@@ -74,7 +74,7 @@ const getAllRefusedReservationForMyParking = async (id) => {
 }
 
 const getMyReservations = async (id) => {
-    const allMyReservations = await db.raw(`SELECT * FROM parking_reservation WHERE reserved_by_id = :id AND status = 'Odobreno'`, 
+    const allMyReservations = await db.raw(`SELECT * FROM parking_reservation WHERE reserved_by_id = :id`, 
     {id})
     return allMyReservations.rows
 }
