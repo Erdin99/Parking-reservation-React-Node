@@ -60,3 +60,21 @@
 .success_info:before {
     content: "Ni jedno polje ne smije biti prazno!";
 }
+
+.back-button-space {
+    margin: 15px;
+}
+
+.back-button {
+    background: #33a6d3;
+    color: white;
+    font-size: 17px;
+    line-height: 1;
+    padding: 10px 20px 10px 15px;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+  
+.back-button:hover {
+    background: #76c0dd;
+}

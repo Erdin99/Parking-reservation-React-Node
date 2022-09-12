@@ -21,9 +21,9 @@ function AboutMe() {
                         </div>
                         <div className="card-text">
                             <p>Moje ime je Erdin Idrizović. Student sam završne godine na Prirodno-matematičkom fakultetu, smjer "Informacione tehnologije". 
-                                Kao temu projekta izabrao sam rezervaciju slobodnih parking prostora, s ciljem da u periodu velikih gužvi i potražnji istih, možete od kuće rezervisati 
-                                prostor po Vašoj preferenciji, te se uputiti ka istom u periodu odabranog termina. Za bilo kakve informacije možete me kontaktirati na nekim od društvenih 
-                                mreža postavljenih u nastavku.</p>
+                                Kao temu projekta izabrao sam rezervaciju slobodnih parking prostora, s ciljem da u periodu velikih gužvi i potražnji istih, možete od kuće 
+                                rezervisati prostor po Vašoj potrebi ili želji, te se uputiti u periodu odabranog termina. Za bilo kakve informacije možete me kontaktirati na 
+                                nekim od društvenih mreža postavljenih u nastavku.</p>
                         </div>
                     </div>
                 </div>

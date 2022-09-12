@@ -45,54 +45,58 @@ function SpecificParkingDetails() {
     }
 
     useEffect(() => {
-        getParkingDetails();
+        if(localStorage.getItem("user") === null) {
+            navigate('/login');
+        }
+        else {
+            getParkingDetails();
 
-        //blok koda koji omogucava prelaz sa slike na sliku
-        const imgs = document.querySelectorAll('.img-select a');
-        const imgBtns = [...imgs];
-        let imgId = 1;
+            //blok koda koji omogucava prelaz sa slike na sliku
+            const imgs = document.querySelectorAll('.img-select a');
+            const imgBtns = [...imgs];
+            let imgId = 1;
 
-        imgBtns.forEach((imgItem) => {
-            imgItem.addEventListener('click', (event) => {
-                event.preventDefault();
-                imgId = imgItem.dataset.id;
-                slideImage();
+            imgBtns.forEach((imgItem) => {
+                imgItem.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    imgId = imgItem.dataset.id;
+                    slideImage();
+                });
             });
-        });
 
-        function slideImage(){
-             const displayWidth = document.querySelector('.img-showcase img:first-child').clientWidth;
+            function slideImage(){
+                const displayWidth = document.querySelector('.img-showcase img:first-child').clientWidth;
 
-            document.querySelector('.img-showcase').style.transform = `translateX(${- (imgId - 1) * displayWidth}px)`;
-        }
+                document.querySelector('.img-showcase').style.transform = `translateX(${- (imgId - 1) * displayWidth}px)`;
+            }
 
-        window.addEventListener('resize', slideImage);
+            window.addEventListener('resize', slideImage);
 
-        if(counter > parkingComments.length + 5) {
-            setRemoveLink(true);
-        }
+            if(counter > parkingComments.length + 5) {
+                setRemoveLink(true);
+            }
 
-        //blok koda koji klikom na "Rezervisi parking" otvara prozor sa formom za rezervaciju
-        var formModal = document.getElementById("formModal");
+            //blok koda koji klikom na "Rezervisi parking" otvara prozor sa formom za rezervaciju
+            var formModal = document.getElementById("formModal");
 
-        var openFormLink = document.getElementById("openForm");
+            var openFormLink = document.getElementById("openForm");
 
-        var closeSpan = document.getElementsByClassName("closeForm")[0];
+            var closeSpan = document.getElementsByClassName("closeForm")[0];
 
-        openFormLink.onclick = function() {
-            formModal.style.display = "block";
-        }
+            openFormLink.onclick = function() {
+                formModal.style.display = "block";
+            }
 
-        closeSpan.onclick = function() {
-            formModal.style.display = "none";
-        }
-
-        window.onclick = function(event) {
-            if (event.target === formModal) {
+            closeSpan.onclick = function() {
                 formModal.style.display = "none";
             }
+
+            window.onclick = function(event) {
+                if (event.target === formModal) {
+                    formModal.style.display = "none";
+                }
+            }
         }
-       
     }, [counter, parkingDetails, parkingComments]);
 
 

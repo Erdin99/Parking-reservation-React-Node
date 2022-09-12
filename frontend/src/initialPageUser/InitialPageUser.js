@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navigation from "../navigation/Navigation";
 import "./initialPageUser.css";
 import parkingImage from "../images/parking.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function InitialPageAdmin() {
@@ -10,15 +10,21 @@ function InitialPageAdmin() {
     const [parkingListFilter, setParkingListFilter] = useState('0');
     const [parkingList, setParkingList] = useState([]);
     
+    const navigate = useNavigate();
+
     useEffect(() => {
-        setParkingListFilter(localStorage.getItem('SelectedFilter') || '0')
-        getParkingData();
+        if(localStorage.getItem("user") === null) {
+            navigate('/login');
+        }
+        else {
+            setParkingListFilter(localStorage.getItem('SelectedFilter') || '0')
+            getParkingData();
+        }
     }, [parkingListFilter]);
 
     function setSelectedFilter(filter) {
         localStorage.setItem('SelectedFilter', filter)
         setParkingListFilter(filter)
-        //this.setState( { selectedFilter: filter } );
     }
     
     function getParkingData() {

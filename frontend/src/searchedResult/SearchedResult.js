@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Navigation from "../navigation/Navigation";
 import axios from "axios";
+import {useNavigate} from 'react-router-dom';
 
 function SeachedResult() {
 
@@ -8,9 +9,15 @@ function SeachedResult() {
 
     const [searchTable, setSearchTable] = useState([]);
 
+    const navigate = useNavigate();
 
     useEffect(() => {
-        searchByCode();
+        if(localStorage.getItem("user") === null) {
+            navigate('/login');
+        }
+        else {
+            searchByCode();
+        }
     }, [searchTable])
  
     function searchByCode() {

@@ -16,8 +16,12 @@ function CommonWall() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        getPosts();
-
+        if(localStorage.getItem("user") === null) {
+            navigate('/login');
+        }
+        else {
+            getPosts();
+        }
     }, [posts]);
 
     function createPost(e) {
