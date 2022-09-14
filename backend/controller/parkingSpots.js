@@ -1,9 +1,9 @@
 import ParkingService from '../service/parkingSpots'
 import ParkingCommentsService from '../service/parkingComments'
 
-const createParkingSpot = async (parkingSpotsDto, req, res) => {
+const createParkingSpot = async (parkingSpotsDto, parking_image, req, res) => {
     try {
-      const parkingSpot = await ParkingService.createParkingSpot(parkingSpotsDto, req.body)
+      await ParkingService.createParkingSpot(parkingSpotsDto, parking_image, req.body)
       res.send('Successful created parking spot!')
     } catch (err) {
       console.error(err)

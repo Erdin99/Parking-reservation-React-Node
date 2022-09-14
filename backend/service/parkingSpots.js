@@ -1,8 +1,9 @@
 import ParkingSpotsDAO from '../db/dao/parkingSpots'
 import config from '../core/config'
 
-const createParkingSpot = (parkingDto, parkingDto1) => {
-    const { parking_name, parking_address, number_of_parking_spots, basic_informations, price, parking_image } = parkingDto1;
+
+const createParkingSpot = (parkingDto, parking_image, parkingDto1) => {
+    const { parking_name, parking_address, number_of_parking_spots, basic_informations, price } = parkingDto1;
     return ParkingSpotsDAO.createParkingSpot(parkingDto.id, parkingDto.username, parkingDto.email, parking_name, parking_address, number_of_parking_spots, basic_informations, price, parking_image);
 }
 
