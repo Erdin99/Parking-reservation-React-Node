@@ -9,7 +9,6 @@ import commonWall from './routes/commonWallRoutes'
 import knex from './db'
 import cors from 'cors'
 
-
 knex.migrate.latest()
 const app = express()
 
