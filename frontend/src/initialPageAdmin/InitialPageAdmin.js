@@ -66,7 +66,7 @@ function InitialPageAdmin() {
                 {myParkingList.map((myParking) => {
                     return (
                         <article className="single-parking-space">
-                            <img src={parking} alt="parking image" />
+                            <img src={require('../parkingImages/' + myParking.parking_image)} />
                             <footer>
                                 <div className="parking-info">
                                 <h4>{myParking.parking_name}</h4>

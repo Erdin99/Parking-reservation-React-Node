@@ -5,18 +5,19 @@ import axios from "axios";
 import $ from 'jquery';
 import {useNavigate} from "react-router-dom";
 
+
 function ParkingSpaceForm() {
+    
+    const MAX_LENGTH = 4;
 
     const [parkingName, setParkingName] = useState("");
     const [parkingAddress, setParkingAddress] = useState("");
     const [numberOfParkingSpots, setNumberOfParkingSpots] = useState(0);
     const [parkingPrice, setParkingPrice] = useState(0);
-    const [basicInformations, setBasicInformations] = useState("");
-    // const [parkingImage, setParkingImage] = useState({
-    //     file: [],
-    // });
-    
-    const [parkingImage, setParkingImage] = useState("");
+    const [basicInformations, setBasicInformations] = useState("");    
+    //const [parkingImage, setParkingImage] = useState("");
+
+    const [parkingImages, setParkingImages] = useState([]);
 
     const navigate = useNavigate();
 
@@ -26,60 +27,52 @@ function ParkingSpaceForm() {
         }
     });
 
-    // function fileSelectedHandler(e) {
-    //     setParkingImage({
-    //         ...parkingImage,
-    //         file:e.target.files[0],
-    //     });
-       
-    // }
 
     function createParkingSpot(e) {
         e.preventDefault();
+        if (Object.values(parkingImages).length > MAX_LENGTH) {
+            alert(`Nije moguće postaviti više od ${MAX_LENGTH} slike!`);
+        }
+        else {
+            const data = new FormData();
+            data.set('parking_name', parkingName);
+            data.set('parking_address', parkingAddress);
+            data.set('number_of_parking_spots', numberOfParkingSpots);
+            data.set('basic_informations', basicInformations);
+            data.set('price', parkingPrice);
+            //data.append('parking_image', parkingImage);
 
-    
-        // const data = {
-        //     parking_name: parkingName,
-        //     parking_address: parkingAddress,
-        //     number_of_parking_spots: numberOfParkingSpots,
-        //     basic_informations: basicInformations,
-        //     price: parkingPrice,
-        // }
+            Object.values(parkingImages).forEach(file=>{
+                data.append("images", file);
+            });
 
-        const data = new FormData();
-        data.set('parking_name', parkingName);
-        data.set('parking_address', parkingAddress);
-        data.set('number_of_parking_spots', numberOfParkingSpots);
-        data.set('basic_informations', basicInformations);
-        data.set('price', parkingPrice);
-        data.append('parking_image', parkingImage);
-
-        axios({
-            method: "post",
-            url: `http://localhost:5000/create/parking`,
-            data: data,
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: JSON.parse(localStorage.getItem("user"))
-            },
-            body: JSON.stringify(data),
-        }).then(res => {
-            navigate(`/parking/space/form`)
-            setParkingName("");
-            setParkingAddress("");
-            setNumberOfParkingSpots(0);
-            setParkingPrice(0);
-            setBasicInformations("");
-            $(".create_parking_notification").toggleClass("active");
-                    $("#create_parking_notification_type").toggleClass("success_create_parking");
-                    setTimeout(function() {
-                        $(".create_parking_notification").removeClass("active");
-                        $("#create_parking_notification_type").removeClass("success_create_parking");
-                }, 3000);
-        }).catch(error => {
-            console.log(error)
-        });
+            axios({
+                method: "post",
+                url: `http://localhost:5000/create/parking`,
+                data: data,
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: JSON.parse(localStorage.getItem("user"))
+                },
+                body: JSON.stringify(data),
+            }).then(res => {
+                navigate(`/parking/space/form`)
+                setParkingName("");
+                setParkingAddress("");
+                setNumberOfParkingSpots(0);
+                setParkingPrice(0);
+                setBasicInformations("");
+                $(".create_parking_notification").toggleClass("active");
+                        $("#create_parking_notification_type").toggleClass("success_create_parking");
+                        setTimeout(function() {
+                            $(".create_parking_notification").removeClass("active");
+                            $("#create_parking_notification_type").removeClass("success_create_parking");
+                    }, 3000);
+            }).catch(error => {
+                console.log(error)
+            });
+        }
     }
 
     return (
@@ -116,7 +109,7 @@ function ParkingSpaceForm() {
                             
                             <div className="form-group image-group">
                                 <label htmlFor="image">Postavite fotografije za Vaš parking prostor:</label>
-                                <input type="file" id="file" name="parking_image" accept="image/*" onChange={(e) => setParkingImage(e.target.files[0])} required/>
+                                <input type="file" id="file" name="images" accept="image/*" multiple onChange={(e) => setParkingImages(e.target.files)} required/>
                             </div>
                             
                         </div>

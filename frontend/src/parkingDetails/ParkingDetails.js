@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Navigation from "../navigation/Navigation";
 import "./parkingDetails.css";
-//sljedeca 4 importa iz foldera images obrisati kad se uspostavi konekcija sa bazom
-import alta1 from "../images/alta1.jpg";
-import alta2 from "../images/alta2.jpg";
-import alta3 from "../images/alta3.png";
-import alta4 from "../images/alta4.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import moment from "moment";
@@ -15,6 +10,7 @@ function ParkingDetails() {
     const parkingId = new URLSearchParams(window.location.search).get('id');
     const [myParkingDetails, setMyParkingDetails] = useState([]);
     const [myParkingComments, setMyParkingComments] = useState([]);
+    const [parkingImages, setParkingImages] = useState([]);
 
     const [counter, setCounter] = useState(5);
     const [removeLink, setRemoveLink] = useState(false); //ovo removeLink je za otvori jos komentara, u slucaju da nema vise komentara za prikaz, uklanja se link
@@ -27,7 +23,8 @@ function ParkingDetails() {
         }
         else {
             getMyParkingDetails();
-
+            getImages();
+            
             //blok koda koji omogucava prelaz sa slike na sliku
             const imgs = document.querySelectorAll('.img-select a');
             const imgBtns = [...imgs];
@@ -53,7 +50,7 @@ function ParkingDetails() {
                 setRemoveLink(true);
             }
         }
-    }, [counter]);
+    }, [counter, parkingImages]);
 
     function getMyParkingDetails() {
         axios({
@@ -76,6 +73,19 @@ function ParkingDetails() {
     const runCallback = (cb) => {
         return cb();
     }
+
+    function getImages() {
+        axios({
+            method: "get",
+            url: `http://localhost:5000/parking/images/${parkingId}`,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: JSON.parse(localStorage.getItem("user"))
+            }
+        }).then(res => {
+            setParkingImages(res.data.parkingImages)
+        }).catch(err => console.log(err))
+    }
     
     return (
         <>
@@ -88,33 +98,23 @@ function ParkingDetails() {
                         <div className = "parking-imgs">
                             <div className = "img-display">
                                 <div className = "img-showcase">
-                                    <img src = {alta1} alt = "parking image" />
-                                    <img src = {alta2} alt = "parking image" />
-                                    <img src = {alta3} alt = "parking image" />
-                                    <img src = {alta4} alt = "parking image" />
+                                    {parkingImages.map((parkingImg) => {
+                                        return (
+                                            <img src = {require('../parkingImages/' + parkingImg.image)} alt = "parking image" />
+                                        )
+                                    })}
                                 </div>
                             </div>
                             <div className = "img-select">
-                                <div className = "img-item">
-                                    <a href = "#" data-id = "1">
-                                         <img src = {alta1} alt = "parking image" />                              
-                                    </a>
-                                </div>
-                                <div className = "img-item">
-                                    <a href = "#" data-id = "2">
-                                        <img src = {alta2} alt = "parking image" />
-                                    </a>
-                                </div>
-                                <div className = "img-item">
-                                    <a href = "#" data-id = "3">
-                                        <img src = {alta3} alt = "parking image" />
-                                    </a>
-                                </div>
-                                <div className = "img-item">
-                                    <a href = "#" data-id = "4">
-                                        <img src = {alta4} alt = "parking image" />
-                                    </a>
-                                </div>
+                                {parkingImages.map((parkingImg, i = 1) => {
+                                    return (
+                                        <div className = "img-item">
+                                            <a href = "#" data-id = {i+1}>
+                                                <img src = {require('../parkingImages/' + parkingImg.image)} alt = "parking image" />                              
+                                            </a>
+                                        </div>
+                                    )
+                                })}
                             </div>
                         </div>
                         <div className = "parking-content">

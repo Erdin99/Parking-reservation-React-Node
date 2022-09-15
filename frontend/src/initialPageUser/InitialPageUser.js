@@ -64,7 +64,7 @@ function InitialPageAdmin() {
                             return (
                                 <Link to={`/parking/spot/:?id=${parking.id}`} className="w3-card">
                                     <div className="parking-image">
-                                        <img src={parkingImage}></img>
+                                        <img src={require('../parkingImages/' + parking.parking_image)}></img>
                                     </div>
                                     <div className="parking-card-title">
                                         <h3>{parking.parking_name}</h3>

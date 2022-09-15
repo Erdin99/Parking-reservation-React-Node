@@ -9,6 +9,19 @@ const createParkingSpot = async (created_by_id, created_by_username, created_by_
     return createdParking.rows[0]
 }
 
+const getParkingId = async (image) => {
+    const parkingId = await db.raw(`SELECT id FROM parking_spots WHERE parking_image = :image`, {image})
+    return parkingId.rows[0]
+}
+
+const addParkingImages = async (parking_id, imageArray) => {
+    let parkingId = parking_id.id
+    for(let i = 0; i < imageArray.length; i++) {
+        const image = imageArray[i]
+        await db.raw(`INSERT INTO parking_images(parking_id, image) VALUES (:parkingId, :image)`, {parkingId, image})
+    }
+}
+
 const readAllParkings = async () => {
     const allParkings = await db.raw(`SELECT * FROM parking_spots`)
     return allParkings.rows
@@ -46,6 +59,11 @@ const readParkingDetails = async (id) => {
     return parkingDetail.rows
 }
 
+const getAllImages = async (id) => {
+    const parkingImages = await db.raw(`SELECT image FROM parking_images WHERE parking_id = :id`, {id})
+    return parkingImages.rows
+}
+
 const findValidUserById = async (created_by_id, id) => {
     const validUser = await db.raw(`SELECT * FROM parking_spots WHERE created_by_id = :created_by_id AND id = :id`, {created_by_id, id})
     return validUser.rows[0]
@@ -58,12 +76,18 @@ const updateParking = async (id, parking_name, parking_address, number_of_parkin
     {parking_name, parking_address, number_of_parking_spots, basic_informations, price, id})
 }
 
+const deleteParkingImages = async (id) => {
+    await db.raw(`DELETE FROM parking_images WHERE parking_id = :id`, {id})
+}
+
 const deleteParking = async (id) => {
     await db.raw(`DELETE FROM parking_spots WHERE id = :id`, {id})
 }
 
 export default {
     createParkingSpot,
+    getParkingId,
+    addParkingImages,
     readAllParkings,
     readAllCheapestToExpensiveParkings,
     readAllExpensiveToCheapestParkings,
@@ -71,7 +95,9 @@ export default {
     readAllLeastToMostParkingSpaces,
     readMyList,
     readParkingDetails,
+    getAllImages,
     findValidUserById,
     updateParking,
+    deleteParkingImages,
     deleteParking
 }
