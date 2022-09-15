@@ -36,13 +36,10 @@
 
 .img-item{
     margin: 0.3rem;
-    border: 1px solid black;
+    height: 30%;
+    width: 30%;
 }
 
-.img-item img {
-    height: 100%;
-    width: 100%;
-}
 
 .img-item:nth-child(1),
 .img-item:nth-child(2),

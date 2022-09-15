@@ -1,14 +1,25 @@
 import ParkingService from '../service/parkingSpots'
 import ParkingCommentsService from '../service/parkingComments'
+import ParkingSpotsDAO from '../db/dao/parkingSpots'
 
 const createParkingSpot = async (parkingSpotsDto, parking_image, req, res) => {
     try {
       await ParkingService.createParkingSpot(parkingSpotsDto, parking_image, req.body)
       res.send('Successful created parking spot!')
     } catch (err) {
-      console.error(err)
+      console.log(err)
       res.status(400).send()
     }
+}
+
+const addParkingImages = async (imageArray, req, res) => {
+  try {
+    const parkingId = await ParkingSpotsDAO.getParkingId(imageArray[0])
+    await ParkingService.addParkingImages(parkingId, imageArray)
+  } catch (err) {
+    console.log(err)
+    res.status(400).send()
+  }
 }
 
 const readAllParkings = async (filter, req, res) => {
@@ -42,6 +53,16 @@ const readParkingDetails = async (id, req, res) => {
   }
 }
 
+const getAllImages = async (id, req, res) =>  {
+  try {
+    const parkingImages = await ParkingService.getAllImages(id)
+    res.send({ parkingImages })
+  } catch (err) {
+    console.log(err)
+    res.status(400).send()
+  }
+}
+
 const updateParking = async (id, req, res) => {
   try {
     const updatedParking = await ParkingService.updateParking(id, req.body)
@@ -54,6 +75,7 @@ const updateParking = async (id, req, res) => {
 
 const deleteParking = async (id, req, res) => {
   try {
+    await ParkingService.deleteParkingImages(id)
     await ParkingService.deleteParking(id)
     res.send('Successful deleted!')
   } catch (err) {
@@ -64,9 +86,11 @@ const deleteParking = async (id, req, res) => {
 
 export default {
     createParkingSpot,
+    addParkingImages,
     readAllParkings,
     readMyList,
     readParkingDetails,
+    getAllImages,
     updateParking,
     deleteParking
 }

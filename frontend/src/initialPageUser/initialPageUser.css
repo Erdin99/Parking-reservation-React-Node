@@ -79,7 +79,7 @@ body {
     margin-top: -84px;
     position: relative;
     z-index: 1000;
-    background-color: rgba(0,0,0,0.7);
+    background-color: rgba(0,0,0,0.85);
     padding: 0px 5px 25px 0;
     border-radius: 0px 0px 10px 10px;
 }
