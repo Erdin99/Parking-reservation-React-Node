@@ -80,6 +80,14 @@ const deleteParkingImages = async (id) => {
     await db.raw(`DELETE FROM parking_images WHERE parking_id = :id`, {id})
 }
 
+const deleteParkingComments = async (id) => {
+    await db.raw(`DELETE FROM parking_comments WHERE parking_id = :id`, {id})
+}
+
+const deleteParkingReservations = async (id) => {
+    await db.raw(`DELETE FROM parking_reservation WHERE reservation_parking_id = :id`, {id})
+}
+
 const deleteParking = async (id) => {
     await db.raw(`DELETE FROM parking_spots WHERE id = :id`, {id})
 }
@@ -99,5 +107,7 @@ export default {
     findValidUserById,
     updateParking,
     deleteParkingImages,
+    deleteParkingComments,
+    deleteParkingReservations,
     deleteParking
 }

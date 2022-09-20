@@ -50,6 +50,14 @@ const deleteParkingImages = (id) => {
     return ParkingSpotsDAO.deleteParkingImages(id)
 }
 
+const deleteParkingComments = (id) => {
+    return ParkingSpotsDAO.deleteParkingComments(id)
+}
+
+const deleteParkingReservations = (id) => {
+    return ParkingSpotsDAO.deleteParkingReservations(id)
+}
+
 const deleteParking = (id) => {
     return ParkingSpotsDAO.deleteParking(id)
 }
@@ -63,5 +71,7 @@ export default {
     getAllImages,
     updateParking,
     deleteParkingImages,
+    deleteParkingComments,
+    deleteParkingReservations,
     deleteParking
 }

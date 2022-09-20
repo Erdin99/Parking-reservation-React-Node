@@ -76,6 +76,8 @@ const updateParking = async (id, req, res) => {
 const deleteParking = async (id, req, res) => {
   try {
     await ParkingService.deleteParkingImages(id)
+    await ParkingService.deleteParkingComments(id)
+    await ParkingService.deleteParkingReservations(id)
     await ParkingService.deleteParking(id)
     res.send('Successful deleted!')
   } catch (err) {
