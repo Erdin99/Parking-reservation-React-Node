@@ -2,24 +2,16 @@ import ParkingService from '../service/parkingSpots'
 import ParkingCommentsService from '../service/parkingComments'
 import ParkingSpotsDAO from '../db/dao/parkingSpots'
 
-const createParkingSpot = async (parkingSpotsDto, parking_image, req, res) => {
+const createParkingSpot = async (parkingSpotsDto, parking_image, imageArray, req, res) => {
     try {
       await ParkingService.createParkingSpot(parkingSpotsDto, parking_image, req.body)
+      const parkingId = await ParkingSpotsDAO.getParkingId(imageArray[0])
+      await ParkingService.addParkingImages(parkingId, imageArray)
       res.send('Successful created parking spot!')
     } catch (err) {
       console.log(err)
       res.status(400).send()
     }
-}
-
-const addParkingImages = async (imageArray, req, res) => {
-  try {
-    const parkingId = await ParkingSpotsDAO.getParkingId(imageArray[0])
-    await ParkingService.addParkingImages(parkingId, imageArray)
-  } catch (err) {
-    console.log(err)
-    res.status(400).send()
-  }
 }
 
 const readAllParkings = async (filter, req, res) => {
@@ -88,7 +80,6 @@ const deleteParking = async (id, req, res) => {
 
 export default {
     createParkingSpot,
-    addParkingImages,
     readAllParkings,
     readMyList,
     readParkingDetails,

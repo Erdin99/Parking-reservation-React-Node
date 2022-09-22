@@ -28,8 +28,7 @@ const router = express.Router()
 
 // routes for parking spots
 router.post('/create/parking', auth([config.ROLES.bookingAdminRole]), upload.any(), (req, res) => {
-    parkingSpotsController.createParkingSpot(res.locals.user, req.image_array[0], req, res)
-    parkingSpotsController.addParkingImages(req.image_array, req, res)
+    parkingSpotsController.createParkingSpot(res.locals.user, req.image_array[0], req.image_array, req, res)
 })
  
 router.get('/lists/parking/:filter', auth([config.ROLES.bookingUserRole]), (req, res) => { 

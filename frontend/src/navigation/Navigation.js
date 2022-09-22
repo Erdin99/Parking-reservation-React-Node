@@ -38,6 +38,8 @@ function Navigation() {
 
     function handleLogout() {
         localStorage.removeItem('user');
+        localStorage.removeItem('userMail');
+        localStorage.removeItem('userRole');
     }
 
 
