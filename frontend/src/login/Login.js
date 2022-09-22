@@ -40,15 +40,6 @@ function Login() {
                 email: email,
                 password: password,
             }
-            // axios.post('http://localhost:5000/users/login', user).then(res => {
-            //     if(res.data.user.role.role_id === 1) {
-            //         navigate("/users/admin");
-            //     }
-            //     else {
-            //         navigate("/users/user");
-            //     }
-            // })
-            // .catch(error => setMsg(true));
 
             axios({
                 method: "post",

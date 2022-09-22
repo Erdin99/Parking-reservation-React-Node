@@ -46,7 +46,7 @@ function ParkingDetails() {
 
             window.addEventListener('resize', slideImage);
 
-            if(counter > myParkingComments) {
+            if(counter > myParkingComments.length + 5) {
                 setRemoveLink(true);
             }
         }
