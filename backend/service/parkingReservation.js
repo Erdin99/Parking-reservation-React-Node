@@ -17,13 +17,11 @@ const finishReservation = async (status, id) => {
     return ParkingReservationDAO.refuseReservation(status, id)
 }
 
-const getAllReservationForMyParking = async (parkingReservationDto) => {
-    const id = parkingReservationDto.id
+const getAllReservationForMyParking = async (id) => {
     return ParkingReservationDAO.getAllReservationForMyParking(id)
 }
 
-const getAllRefusedReservationForMyParking = async (parkingReservationDto) => {
-    const id = parkingReservationDto.id
+const getAllRefusedReservationForMyParking = async (id) => {
     return ParkingReservationDAO.getAllRefusedReservationForMyParking(id)
 }
 

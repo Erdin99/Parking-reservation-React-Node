@@ -106,9 +106,9 @@ const finishReservation = async (id, req, res) => {
     }
 }
 
-const getAllReservationForMyParking = async (parkingReservationDto, req, res) => {
+const getAllReservationForMyParking = async (id, req, res) => {
     try {
-        const listOfReservationForMyParking = await ParkingReservationService.getAllReservationForMyParking(parkingReservationDto)
+        const listOfReservationForMyParking = await ParkingReservationService.getAllReservationForMyParking(id)
         res.send({ listOfReservationForMyParking })
     } catch(err) {
         console.log(err)
@@ -116,9 +116,9 @@ const getAllReservationForMyParking = async (parkingReservationDto, req, res) =>
     }
 }
 
-const getAllRefusedReservationForMyParking = async (parkingReservationDto, req, res) => {
+const getAllRefusedReservationForMyParking = async (id, req, res) => {
     try {
-        const listOfRefusedReservationForMyParking = await ParkingReservationService.getAllRefusedReservationForMyParking(parkingReservationDto)
+        const listOfRefusedReservationForMyParking = await ParkingReservationService.getAllRefusedReservationForMyParking(id)
         res.send({ listOfRefusedReservationForMyParking })
     } catch(err) {
         console.log(err)

@@ -6,6 +6,8 @@ import {useNavigate} from 'react-router-dom'
 
 function AdminReservationList() {
     
+    const parkingId = new URLSearchParams(window.location.search).get('id');
+
     const [button1, setButton1] = useState(true);
     const [button2, setButton2] = useState(false);
     const [button3, setButton3] = useState(false);
@@ -29,7 +31,7 @@ function AdminReservationList() {
     function getReservations() {
         axios({
             method: "get",
-            url: `http://localhost:5000/reservations`,
+            url: `http://localhost:5000/reservations/${parkingId}`,
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: JSON.parse(localStorage.getItem("user"))
@@ -42,7 +44,7 @@ function AdminReservationList() {
     function getDelayedReservations() {
         axios({
             method: "get",
-            url: `http://localhost:5000/refused/reservations`,
+            url: `http://localhost:5000/refused/reservations/${parkingId}`,
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: JSON.parse(localStorage.getItem("user"))

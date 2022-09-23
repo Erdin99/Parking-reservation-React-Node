@@ -61,14 +61,14 @@ const updateParkingSpots = async (id, number_of_parking_spots) => {
 
 const getAllReservationForMyParking = async (id) => {
     const allReservations = await db.raw(`SELECT * FROM parking_reservation 
-    WHERE reservation_created_by_id = :id ORDER BY begin_reservation`, 
+    WHERE reservation_parking_id = :id ORDER BY begin_reservation`, 
     {id})
     return allReservations.rows
 }
 
 const getAllRefusedReservationForMyParking = async (id) => {
     const allRefusedReservations = await db.raw(`SELECT * FROM parking_reservation 
-    WHERE reservation_created_by_id = :id AND status = 'Odgodjeno'`, 
+    WHERE reservation_parking_id = :id AND status = 'Odgodjeno'`, 
     {id})
     return allRefusedReservations.rows
 }
