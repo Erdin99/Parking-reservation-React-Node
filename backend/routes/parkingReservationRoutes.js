@@ -26,13 +26,13 @@ router.patch('/finished/reservation/:id', auth([config.ROLES.bookingAdminRole]),
 })
 
 /* /reservations -> route showing the list of customers who have reserved users parking space */
-router.get('/reservations', auth([config.ROLES.bookingAdminRole]), (req, res) => {
-    parkingReservationController.getAllReservationForMyParking(res.locals.user, req, res)
+router.get('/reservations/:id', auth([config.ROLES.bookingAdminRole]), (req, res) => {
+    parkingReservationController.getAllReservationForMyParking(req.params.id, req, res)
 })
 
 /* /refused/reservations -> route showing the refused list of customers who have refused reservation */
-router.get('/refused/reservations', auth([config.ROLES.bookingAdminRole]), (req, res) => {
-    parkingReservationController.getAllRefusedReservationForMyParking(res.locals.user, req, res)
+router.get('/refused/reservations/:id', auth([config.ROLES.bookingAdminRole]), (req, res) => {
+    parkingReservationController.getAllRefusedReservationForMyParking(req.params.id, req, res)
 })
 
 router.get('/my/reservations', auth([config.ROLES.bookingUserRole]), (req, res) => {
