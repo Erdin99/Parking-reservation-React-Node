@@ -1,6 +1,5 @@
 import jwt, { decode } from 'jsonwebtoken'
 import UsersService from '../service/users'
-import {LocalStorage} from 'node-localstorage'
 
 const auth = (listOfRoles) => {
     return function(req, res, next) {
