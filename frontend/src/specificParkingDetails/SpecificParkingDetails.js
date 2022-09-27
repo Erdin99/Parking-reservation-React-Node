@@ -68,7 +68,7 @@ function SpecificParkingDetails() {
                 document.querySelector('.img-showcase').style.transform = `translateX(${- (imgId - 1) * displayWidth}px)`;
             }
 
-            window.addEventListener('resize', slideImage);
+            //window.addEventListener('resize', slideImage);
 
             if(counter > parkingComments.length + 5) {
                 setRemoveLink(true);
